@@ -1,5 +1,7 @@
 body {
     display: flex;
+    flex-direction: column;
+    align-items: column;
     justify-content: center;
 }
 
@@ -7,4 +9,8 @@ body {
     display: flex;
     height: 700px;
     width: 90%;
+}
+
+table {
+    margin-top: 20px;
 }
