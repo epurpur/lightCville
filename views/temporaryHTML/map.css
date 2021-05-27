@@ -1,0 +1,10 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#mapid {
+    display: flex;
+    height: 700px;
+    width: 90%;
+}
