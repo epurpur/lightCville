@@ -1,5 +1,10 @@
+<<<<<<< HEAD:data/seeds/seed.js
+const sequelize = require('../../config/connection');
+const { User, Project } = require('../../models');
+=======
 const sequelize = require('../config/connection');
 const { Streetlights  } = require('../models');
+>>>>>>> 00728c4547120f23d13834b0b5166d9b970d306e:seeds/seed.js
 
 const streetlightData = require('./streetlights.json');
 
