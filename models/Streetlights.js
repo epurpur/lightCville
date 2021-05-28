@@ -11,56 +11,48 @@ Streetlights.init(
       primaryKey: true,
       autoIncrement: true,
     },
-   
-   WATTS : {
-     type: DataTypes.INTEGER,
-     
-   },
-
-   DECAL_COLO:{
-     type: DataTypes.STRING,
-
-   },
-   DECAL_NUMB:{
-     type : DataTypes.STRING,
-   },
-   MOUNT_HEIG:{
-     type:DataTypes.INTEGER,
-   },
-   OWNER:{
-     type:DataTypes.NULL,
-     allowNull: true,
-   },
-  
-   INTSTALL_DA:{
-     type: DataTypes.DATE,
-   
-   },
-   
-    STYLE:{
+    watts : {
+      type: DataTypes.INTEGER,
+    },
+    decal_colo:{
       type: DataTypes.STRING,
     },
-    WORK_EFFEC:{
+    decal_numb:{
+      type : DataTypes.STRING,
+    },
+    mount_heig:{
+      type:DataTypes.INTEGER,
+    },
+    owner:{
+      type:DataTypes.STRING,
+      allowNull: true,
+    },
+    install_da:{
       type: DataTypes.DATE,
     },
-    LUMENS:{
+    style:{
+      type: DataTypes.STRING,
+    },
+    work_effec:{
+      type: DataTypes.DATE,
+    },
+    lumens:{
       type:DataTypes.INTEGER,
     },
-    CONTRACT_N:{
+    contract_n:{
       type:DataTypes.INTEGER,
     },
-    NOM_VOLT:{
+    nom_volt:{
       type:DataTypes.INTEGER,
     },
-    BASE_COLOR:{
-      type :DataTypes.NULL,
-     allowNull:true, 
+    base_colo:{
+      type :DataTypes.STRING,
     },
-   LATITUDE:{
-     type:DataTypes.INTEGER,
-   },
-   LONGITUDE:{
-     type:DataTypes.INTEGER,
+    latitude:{
+      type:DataTypes.DECIMAL,
+    },
+    longitude:{
+      type:DataTypes.DECIMAL,
    },
   },
   
