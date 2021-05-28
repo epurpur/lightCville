@@ -34,6 +34,8 @@ const newData = streetlightData.features.map((item) => {
 
 });
 
+// console.log(newData);
+
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
