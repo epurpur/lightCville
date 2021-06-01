@@ -20,7 +20,9 @@ router.get('/login', async (req,res)=>{
 
 // TODO: make route to render '/register' view
 
-
+router.get('/register',async (req,res)=>{
+  res.render('register');
+});
 
 // TODO: make route to render '/main' view
 
