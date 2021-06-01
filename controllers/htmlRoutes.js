@@ -10,6 +10,9 @@ router.get('/home', async (req, res) => {
 
 // TODO: make route to render '/login' view
 // Remember, '/login' will need information about the user passed into it
+router.get('/login', async (req,res)=>{
+  res.render('login');
+});
 
 
 
