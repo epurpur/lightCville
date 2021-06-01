@@ -1,11 +1,13 @@
 const sequelize = require('../config/connection');
 const { Streetlights  } = require('../models');
 
+// importing streetlights.json. This is where all the data lives
 const streetlightData = require('./streetlights.json');
 
 // mapping our data to a better format
 const newData = streetlightData.features.map((item) => {
   
+  // deconstruct data about each streetlight (item)
   const { WATTS, DECAL_COLO, DECAL_NUMB, MOUNT_HEIG, OWNER, INSTALL_DA, STYLE, WORK_EFFEC, LUMENS, CONTRACT_N, NOM_VOLT, BASE_COLO } = item.properties
 
   const obj = {
@@ -29,19 +31,17 @@ const newData = streetlightData.features.map((item) => {
 
 });
 
-// console.log(newData);
-
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
   
   for (const streetlight of newData) {
+    // create new streetlights record in database
     await Streetlights.create({
+      //spread data for each streetlight
       ...streetlight
     });
   }
-
-  
 
   process.exit(0);
 }
