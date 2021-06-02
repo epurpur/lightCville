@@ -25,10 +25,15 @@ router.get('/register',async (req,res)=>{
 });
 
 // TODO: make route to render '/main' view
-
+router.get('/main',async (req,res)=>{
+  res.render('main');
+});
 
 
 // TODO: make '/logout' route. This will render '/login' view
+router.get('/logout',async (req,res)=>{
+  res.render('logout');
+});
 // Even if we don't do login/logout routes correctly using sessions/cookies, 
 // we can still make this route so that when the logout button is clicked,
 // the user is redirected to the login view. This simulates a 'real' login/logout feature.
