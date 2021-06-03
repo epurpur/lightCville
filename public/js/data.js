@@ -37,7 +37,7 @@ const makePointsCluster = (pointsData) => {
     // makes clusters of points on map because rendering is very slow individually
     const markerClusters = L.markerClusterGroup();
 
-    // iterate through each one of ~3600 markers
+    // iterate through each marker
     for (let i = 0; i < pointsData.length; i++ ) {
         
         // adding information to popup window for each marker
@@ -107,7 +107,38 @@ const dataClick = (event) => {
     event.preventDefault();
 
     console.log('data button click');
-};
+
+    dataFetch()
+
+    };
+
+const dataFetch = async () => {
+    const response = await fetch('/api/testFilter', {
+        method: 'POST'
+    });
+
+    if (response.ok) {
+        const filterData = await response.json()
+        
+        // put points on map using Leaflet points cluster
+        // NEED TO REMOVE EXISTING MARKERS BEFORE CREATING NEW ONES
+        // look at this thread: https://stackoverflow.com/questions/28646317/how-to-remove-all-layers-and-features-from-map
+        mymap.eachLayer(function(index, layer) {
+            console.log(index, layer);
+        });
+
+        // create new markers depending on filtered data
+        
+
+        makePointsCluster(filterData);
+
+        // put data into data table
+        // THIS WORKS AS IS!
+        table.setData(filterData);
+
+
+    }
+}
 
 
 const exportClick = (event) => {
