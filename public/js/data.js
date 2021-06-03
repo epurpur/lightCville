@@ -1,21 +1,21 @@
 /////////////////
 // Leaflet map //
 /////////////////
-var mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
-
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiZXB1cnB1ciIsImEiOiJja24wYXlkZnEwbTNqMm9tbGdoM3R1OXE0In0.TCaPhnKXLVLFpJeUS1AKJQ'
-}).addTo(mymap);
-
-
-
 const fetchInitialStreetlightsData = async () => {
     // Fetch streetlights from Streetlights object upon initial page load
+    
+    // Initialize map
+    const mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiZXB1cnB1ciIsImEiOiJja24wYXlkZnEwbTNqMm9tbGdoM3R1OXE0In0.TCaPhnKXLVLFpJeUS1AKJQ'
+    }).addTo(mymap);
+
     const response = await fetch('/api/streetlights', {
         method: 'GET'
     });
@@ -24,7 +24,7 @@ const fetchInitialStreetlightsData = async () => {
         const streetlightsData = await response.json()
 
         // put points on map using Leaflet points cluster
-        makePointsCluster(streetlightsData);
+        makePointsCluster(streetlightsData, mymap);
 
         //put data into data table
         table.setData(streetlightsData);
@@ -33,11 +33,12 @@ const fetchInitialStreetlightsData = async () => {
 }
 
 
-const makePointsCluster = (pointsData) => {
+const makePointsCluster = (pointsData, mymap) => {
+
     // makes clusters of points on map because rendering is very slow individually
     const markerClusters = L.markerClusterGroup();
 
-    // iterate through each one of ~3600 markers
+    // iterate through each marker
     for (let i = 0; i < pointsData.length; i++ ) {
         
         // adding information to popup window for each marker
@@ -65,9 +66,11 @@ const makePointsCluster = (pointsData) => {
 
         markerClusters.addLayer(m);
     }
-
-    mymap.addLayer(markerClusters);
+    const layerGroup = L.layerGroup([markerClusters]);
+        
+    mymap.addLayer(layerGroup);
 };
+
 
 /////////////////////
 // Tabulator Table //
@@ -103,10 +106,61 @@ const table = new Tabulator("#dataTable", {
 //////////////////////////////////////
 
 // functions to execute on button click
-const dataClick = (event) => {
+const dataFilterClick = (event) => {
     event.preventDefault();
 
-    console.log('data button click');
+    // delete map html element
+    const elem = document.getElementById("mapid").remove();
+
+    // create new map html element and prepend to parent element
+    const parentElem = document.getElementById("dataSection")
+    const newMap = document.createElement('div')
+    newMap.setAttribute('id', 'mapid');
+    newMap.innerHTML = 'new map here';
+    parentElem.prepend(newMap);
+
+    // fetches filtered dataset to display on map
+    dataFetch()
+
+    };
+
+const dataFetch = async () => {
+    const response = await fetch('/api/testFilter', {
+        method: 'POST'
+    });
+
+    if (response.ok) {
+        console.log('good response');
+        const filteredData = await response.json();
+        
+        // create map with filtered data
+        createFilteredMap(filteredData);
+
+        // put filtered data into data table
+        table.setData(filteredData);
+
+
+    }
+}
+
+const createFilteredMap = (filteredData) => {
+    console.log(filteredData);
+
+    // Initialize map
+    var mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiZXB1cnB1ciIsImEiOiJja24wYXlkZnEwbTNqMm9tbGdoM3R1OXE0In0.TCaPhnKXLVLFpJeUS1AKJQ'
+    }).addTo(mymap);
+
+    // put points on map
+    makePointsCluster(filteredData, mymap);
+
 };
 
 
@@ -132,7 +186,7 @@ const editRecordClick = (event) => {
 
 
 // select elements from DOM
-const dataFilterBtn = document.querySelector('#dataFilterBtn').addEventListener('click', dataClick);
+const dataFilterBtn = document.querySelector('#dataFilterBtn').addEventListener('click', dataFilterClick);
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
 const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
 const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener('click', editRecordClick);
