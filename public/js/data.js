@@ -22,10 +22,13 @@ const fetchInitialStreetlightsData = async () => {
 
     if (response.ok) {
         const streetlightsData = await response.json()
-        console.log(streetlightsData[0]);
 
         // put points on map using Leaflet points cluster
         makePointsCluster(streetlightsData);
+
+        //put data into data table
+        table.setData(streetlightsData);
+
     }
 }
 
@@ -71,55 +74,73 @@ const makePointsCluster = (pointsData) => {
 /////////////////////
 
 //create Tabulator on DOM element with id "example-table"
-const table = new Tabulator("#example-table", {
-    height: 225, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-    layout: "fitColumn", //fit columns to width of table (optional)
+const table = new Tabulator("#dataTable", {
+    height: 300, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+    layout:"fitColumns", //fit columns to width of table (optional)
     columns: [ //Define Table Columns
-        {title:"id", field:"id", width:100},
-        {title:"base_colo", field:"base_colo", width:100},
-        {title:"contract_n", field:"contract_n", width:100},
-        {title:"decal_colo", field:"decal_colo", width:100},
-        {title:"decal_numb", field:"decal_numb", width:100},
-        {title:"install_da", field:"install_da", width:100},
-        {title:"lumens", field:"lumens", width:100},
-        {title:"mount_heig", field:"mount_heig", width:100},
-        {title:"nom_volt", field:"nom_volt", width:100},
-        {title:"owner", field:"owner", width:100},
-        {title:"style", field:"style", width:100},
-        {title:"watts", field:"watts", width:100},
-        {title:"work_effec", field:"work_effec", width:100},
+        {title:"id", field:"id", width:150},
+        {title:"base_colo", field:"base_colo", width:150},
+        {title:"contract_n", field:"contract_n", width:150},
+        {title:"decal_colo", field:"decal_colo", width:150},
+        {title:"decal_numb", field:"decal_numb", width:150},
+        {title:"install_da", field:"install_da", width:150},
+        {title:"lumens", field:"lumens", width:150},
+        {title:"mount_heig", field:"mount_heig", width:150},
+        {title:"nom_volt", field:"nom_volt", width:150},
+        {title:"owner", field:"owner", width:150},
+        {title:"style", field:"style", width:150},
+        {title:"watts", field:"watts", width:150},
+        {title:"work_effec", field:"work_effec", width:150},
     ],
     rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
     },
 });
 
-// //create Tabulator on DOM element with id "example-table"
-// const table = new Tabulator("#example-table", {
-//     height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-//     layout:"fitColumn", //fit columns to width of table (optional)
-//     columns:[ //Define Table Columns
-//         {title:"Name", field:"name", width:150},
-//         {title:"Age", field:"age", align:"left", formatter:"progress"},
-//         {title:"Favourite Color", field:"col"},
-//         {title:"Date Of Birth", field:"dob", sorter:"date", align:"center"},
-//     ],
-//     rowClick:function(e, row){ //trigger an alert message when the row is clicked
-//         alert("Row " + row.getData().id + " Clicked!!!!");
-//     },
-// });
 
-// //define some sample data
-// var tabledata = [
-// 	{id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
-// 	{id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
-// 	{id:3, name:"Christine Lobowski", age:"42", col:"green", dob:"22/05/1982"},
-// 	{id:4, name:"Brendon Philips", age:"125", col:"orange", dob:"01/08/1980"},
-// 	{id:5, name:"Margret Marmajuke", age:"16", col:"yellow", dob:"31/01/1999"},
-// ];
+//////////////////////////////////////
+// add event handlers to each button//
+//////////////////////////////////////
 
-//load sample data into the table
-// table.setData(tabledata);
+// functions to execute on button click
+const dataClick = (event) => {
+    event.preventDefault();
+
+    console.log('data button click');
+};
 
 
+const exportClick = (event) => {
+    event.preventDefault();
+
+    console.log('export button click');
+};
+
+
+const addRecordClick = (event) => {
+    event.preventDefault();
+
+    console.log('add record click');
+};
+
+
+const editRecordClick = (event) => {
+    event.preventDefault();
+
+    console.log('edit record click');
+};
+
+
+// select elements from DOM
+const dataFilterBtn = document.querySelector('#dataFilterBtn').addEventListener('click', dataClick);
+const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
+const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
+const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener('click', editRecordClick);
+
+
+
+
+
+
+// execute on page load
 fetchInitialStreetlightsData();
