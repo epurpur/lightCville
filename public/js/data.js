@@ -128,10 +128,12 @@ const dataFetch = async () => {
 
     // get select input values provided by user
     let decal_colo = document.querySelector('#decal_colo').value.trim();
-    decal_colo = decal_colo.toString();
+    if (decal_colo === "Choose...") {decal_colo = null}
+    
     let owner = document.querySelector('#owner').value.trim();
-    if (!owner) {owner = null} else {owner.toString()}
-    console.log(decal_colo, owner)
+    if (owner === "Choose..." || owner === "None") {owner = null}
+    
+    console.log(decal_colo, typeof(decal_colo), owner)
 
     const response = await fetch('/api/testFilter', {
         method: 'POST',
@@ -204,18 +206,11 @@ const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener(
 // Modal Buttons //
 ///////////////////
 
-const logInput = (event) => {
-    event.preventDefault();
-
-    const decal_colo = document.querySelector('#decal_colo').value.trim();
-    console.log(decal_colo);
-}
-
 // 'Go!' button in data filter modal
 const makeDataFilterBtn = document.querySelector('#makeDataFilterBtn').addEventListener('click', dataFilter)
 
 
-
+ 
 
 
 
