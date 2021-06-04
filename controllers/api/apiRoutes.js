@@ -67,24 +67,7 @@ router.post('/dataFilter', async (req, res) => {
     res.status(200).json(filterData);
 });
 
-//delete here
-// TODO: make route to retrieve filtered data
-// THIS IS A TEST
-router.post('/testFilter', async (req, res) => {
 
-  console.log('\n Test Filter \n');
-
-  // run sequelize query to find data that matches my parameters
-  const filterData = await Streetlights.findAll({
-      where: { 
-        decal_colo: req.body.decal_colo,
-        owner: req.body.owner
-      },
-  });
-  console.log(`\n ${filterData.length} \n`)
-  res.status(200).json(filterData);
-});
-//to here
 
 
 module.exports = router;
