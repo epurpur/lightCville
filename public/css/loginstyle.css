@@ -1,0 +1,17 @@
+.login-form {
+    padding: 10%;
+    color: #A4F4EC;
+    border-radius: 5pt;
+    margin: 10;
+    font-family: sans-serif;
+}
+
+.btn-primary {
+    color: #78C091; 
+    border-radius: 5pt;
+    margin: 10;
+}
+
+.form-group2 {
+    padding-right: 10pt;
+}
