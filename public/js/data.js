@@ -1,6 +1,7 @@
 /////////////////
 // Leaflet map //
 /////////////////
+
 const fetchInitialStreetlightsData = async () => {
     // Fetch streetlights from Streetlights object upon initial page load
 
@@ -71,6 +72,46 @@ const makePointsCluster = (pointsData, mymap) => {
 };
 
 
+const createFilteredMap = (filteredData) => {
+    console.log("Data returned from request:", filteredData);
+
+    // Initialize map
+    var mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiZXB1cnB1ciIsImEiOiJja24wYXlkZnEwbTNqMm9tbGdoM3R1OXE0In0.TCaPhnKXLVLFpJeUS1AKJQ'
+    }).addTo(mymap);
+
+    // put points on map
+    makePointsCluster(filteredData, mymap);
+
+};
+
+
+// functions to execute on button click
+const dataFilter = (event) => {
+    event.preventDefault();
+
+    // delete map html element
+    const elem = document.getElementById("mapid").remove();
+
+    // create new map html element and prepend to parent element
+    const parentElem = document.getElementById("dataSection")
+    const newMap = document.createElement('div')
+    newMap.setAttribute('id', 'mapid');
+    parentElem.prepend(newMap);
+
+
+    // fetches filtered dataset to display on map
+    dataFetch()
+
+};
+
 /////////////////////
 // Tabulator Table //
 /////////////////////
@@ -94,101 +135,13 @@ const table = new Tabulator("#dataTable", {
         {title:"watts", field:"watts", width:175},
         {title:"work_effec", field:"work_effec", width:175},
     ],
-    rowClick:function(e, row){ //trigger an alert message when the row is clicked
-        alert("Row " + row.getData().id + " Clicked!!!!");
-    },
 });
+
 
 
 //////////////////////////////////////
 // add event handlers to each button//
 //////////////////////////////////////
-
-// functions to execute on button click
-const dataFilter = (event) => {
-    event.preventDefault();
-
-    // delete map html element
-    const elem = document.getElementById("mapid").remove();
-
-    // create new map html element and prepend to parent element
-    const parentElem = document.getElementById("dataSection")
-    const newMap = document.createElement('div')
-    newMap.setAttribute('id', 'mapid');
-    parentElem.prepend(newMap);
-
-
-    // fetches filtered dataset to display on map
-    dataFetch()
-
-    };
-
-const dataFetch = async () => {
-    // makes fetch request to database with user-provided parameters
-
-    // get select input values provided by user.
-    // coerce data to be string, null, etc
-    let decal_colo = document.querySelector('#decal_colo').value.trim();
-    if (decal_colo === "Choose...") {decal_colo = null}
-    
-    let owner = document.querySelector('#owner').value.trim();
-    if (owner === "Choose..." || owner === "None") {owner = null}
-    
-    console.log(decal_colo, owner)
-
-    //choose fetch response to make based on user filters
-    if (decal_colo === null) {
-        // if no decal_colo
-        const response = await fetch('/api/testFilterNoDC', {
-            method: 'POST',
-            body: JSON.stringify({ owner }),
-            headers: { 'Content-Type': 'application/json' },
-        });
-        if (response.ok) {
-            const filteredData = await response.json();
-            // create map with filtered data
-            createFilteredMap(filteredData);
-            // put filtered data into data table
-            table.setData(filteredData);
-        }
-    } else if (decal_colo != null) {
-        // if decal_colo exists
-        const response = await fetch('/api/FilterDC', {
-            method: 'POST',
-            body: JSON.stringify({ decal_colo, owner }),
-            headers: { 'Content-Type': 'application/json' },
-        });
-        if (response.ok) {
-            const filteredData = await response.json();
-            // create map with filtered data
-            createFilteredMap(filteredData);
-            // put filtered data into data table
-            table.setData(filteredData);
-        }
-    }
-
-}
-
-const createFilteredMap = (filteredData) => {
-    console.log("Data returned from request:", filteredData);
-
-    // Initialize map
-    var mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoiZXB1cnB1ciIsImEiOiJja24wYXlkZnEwbTNqMm9tbGdoM3R1OXE0In0.TCaPhnKXLVLFpJeUS1AKJQ'
-    }).addTo(mymap);
-
-    // put points on map
-    makePointsCluster(filteredData, mymap);
-
-};
-
 
 const exportClick = (event) => {
     event.preventDefault();
@@ -210,11 +163,11 @@ const editRecordClick = (event) => {
     console.log('edit record click');
 };
 
-
 // select other button elements in DOM
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
 const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
 const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener('click', editRecordClick);
+
 
 
 ///////////////////
@@ -225,7 +178,83 @@ const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener(
 const makeDataFilterBtn = document.querySelector('#makeDataFilterBtn').addEventListener('click', dataFilter)
 
 
- 
+const dataFetch = async () => {
+    // makes fetch request to database with user-provided parameters
+
+    // get select input values provided by user.
+    // coerce data to be string, null, etc
+    let decal_colo = document.querySelector('#decal_colo').value.trim();
+    if (decal_colo === "Choose...") {decal_colo = null};
+    
+    let owner = document.querySelector('#owner').value.trim();
+    if (owner === "Choose..." || owner === "None") {owner = null};
+    
+    let lumens = document.querySelector('#lumens').value.trim();
+    if (lumens === "Choose...") {lumens = null};
+
+    // log user choices
+    console.log(decal_colo, owner, lumens)
+
+    //choose fetch response to make based on user filters
+    if (decal_colo === null && lumens != null) {
+        // if no decal_colo but yes lumens
+        const response = await fetch('/api/FilterNoDCYesL', {
+            method: 'POST',
+            body: JSON.stringify({ owner, lumens }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
+    } else if (decal_colo === null && lumens === null) {
+        // if no decal and no lumens
+        const response = await fetch('/api/FilterNoDCNoL', {
+            method: 'POST',
+            body: JSON.stringify({ owner }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
+    } else if (decal_colo != null && lumens === null) {
+        // if yes decal_colo and no lumens
+        const response = await fetch('/api/FilterYesDCNoL', {
+            method: 'POST',
+            body: JSON.stringify({ decal_colo, owner }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
+    } else if (decal_colo != null && lumens != null) {
+        // if yes decal_colo and yes lumens
+        const response = await fetch('/api/FilterYesDCYesL', {
+            method: 'POST',
+            body: JSON.stringify({ decal_colo, owner, lumens }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
+    }
+}
+
 
 
 

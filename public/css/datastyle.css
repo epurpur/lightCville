@@ -9,6 +9,7 @@
     align-items: center;
 }
 
+/* map styles */ 
 #mapid {
     display: flex;
     height: 700px;
@@ -16,6 +17,11 @@
     border-radius: 5px;
 }
 
+.leaflet-popup-content {
+    font-size: 15px;
+}
+
+/* button styles */
 #buttonRow {
     width: 95%;
     display: flex;
@@ -28,6 +34,7 @@ button {
     font-size: 30px;
 }
 
+/* data table styles */
 #dataTable {
     width: 95%;
     border-radius: 5px;
