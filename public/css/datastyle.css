@@ -1,0 +1,31 @@
+#dataSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mapid {
+    display: flex;
+    height: 700px;
+    width: 95%;
+    border-radius: 5px;
+}
+
+#buttonRow {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+}
+
+button {
+    width: 25%;
+    font-size: 30px;
+}
+
+#dataTable {
+    width: 95%;
+    border-radius: 5px;
+}
+

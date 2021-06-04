@@ -13,10 +13,8 @@ router.get('/streetlights', async (req, res) => {
 });
 
 
-// TODO: make route to make new User in database
-// Which type of route should this be? (GET, POST, PUT, DELETE)?
+//route to make new User in database
 router.post('/', (req, res) => {
-  console.log("hi",req.body);
   User.create({
      name: req.body.name,
      email: req.body.email,
@@ -42,8 +40,33 @@ router.get('/getusers',(req,res)=>{
 
 });
 
+
 // TODO: make route to retrieve filtered data
-// wait until we have '/home' view to figure this out
+
+router.post('/dataFilter', async (req, res) => {
+
+    console.log('\n Filtered Data \n');
+
+    // run sequelize query to find data that matches my parameters
+    const filterData = await Streetlights.findAll({
+        where: {
+               
+                decal_colo: req.body.decal_colo,
+                 lumens:req.body.lumens,
+                 owner:req.body.owner,
+                 watts:req.body.watts,
+                 decal_numb:req.body.decal_numb,
+                 mount_heig:req.body.mount_heig,
+                 install_da:req.body.install_da,
+                 style:req.body.style,
+                 base_colo:req.body.base_colo,
+                 nom_volt:req.body.nom_volt
+
+        }
+    });
+    console.log(`\n ${filterData.length} \n`)
+    res.status(200).json(filterData);
+});
 
 
 module.exports = router;

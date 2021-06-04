@@ -2,10 +2,10 @@ const router = require('express').Router();
 const { Streetlights, User } = require('../models');
 
 
-// test route to render home route
-router.get('/home', async (req, res) => {
-  res.render('home');
-});
+// // test route to render home route
+// router.get('/home', async (req, res) => {
+//   res.render('home');
+// });
 
 
 // TODO: make route to render '/login' view
@@ -25,8 +25,8 @@ router.get('/register',async (req,res)=>{
 });
 
 // TODO: make route to render '/main' view
-router.get('/main',async (req,res)=>{
-  res.render('main');
+router.get('/data',async (req,res)=>{
+  res.render('data');
 });
 
 
