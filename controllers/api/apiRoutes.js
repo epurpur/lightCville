@@ -42,8 +42,7 @@ router.get('/getusers',(req,res)=>{
 });
 
 
-// TODO: make route to retrieve filtered data
-
+// route to retrieve filtered data
 router.post('/dataFilter', async (req, res) => {
 
     console.log('\n Filtered Data \n');
@@ -68,5 +67,79 @@ router.post('/dataFilter', async (req, res) => {
     res.status(200).json(filterData);
 });
 
+
+
+/**
+ * DATA FILTER ROUTES
+ * These are special routes because they represent all
+ * the possible combinations of differet data filters
+ */
+
+// route case: data_colo = null, lumens != null
+router.post('/FilterNoDCYesL', async (req, res) => {
+
+  console.log('\n FilterNoDCYesL \n');
+
+  // run sequelize query to find data that matches my parameters
+  const filterData = await Streetlights.findAll({
+      where: { 
+        owner: req.body.owner,
+        lumens: req.body.lumens
+      },
+  });
+  console.log(`\n Records returned: ${filterData.length} \n`)
+  res.status(200).json(filterData);
+});
+
+
+//route case: decal_colo = null, lumens = null 
+router.post('/FilterNoDCNoL', async (req, res) => {
+
+  console.log('\n FilterNoDCNoL \n');
+
+  // run sequelize query to find data that matches my parameters
+  const filterData = await Streetlights.findAll({
+      where: { 
+        owner: req.body.owner
+      },
+  });
+  console.log(`\n Records returned: ${filterData.length} \n`)
+  res.status(200).json(filterData);
+});
+
+
+//route case: decal_colo != null, lumens = null
+router.post('/FilterYesDCNoL', async (req, res) => {
+
+  console.log('\n FilterYesDCNoL \n');
+
+  // run sequelize query to find data that matches my parameters
+  const filterData = await Streetlights.findAll({
+      where: { 
+        decal_colo: req.body.decal_colo,
+        owner: req.body.owner
+      },
+  });
+  console.log(`\n Records returned: ${filterData.length} \n`)
+  res.status(200).json(filterData);
+});
+
+
+//route case: decal_colo != null, lumens != null
+router.post('/FilterYesDCYesL', async (req, res) => {
+
+  console.log('\n FilterYesDCYesL \n');
+
+  // run sequelize query to find data that matches my parameters
+  const filterData = await Streetlights.findAll({
+      where: { 
+        decal_colo: req.body.decal_colo,
+        owner: req.body.owner,
+        lumens: req.body.lumens
+      },
+  });
+  console.log(`\n Records returned: ${filterData.length} \n`)
+  res.status(200).json(filterData);
+});
 
 module.exports = router;
