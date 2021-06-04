@@ -3,7 +3,7 @@
 /////////////////
 const fetchInitialStreetlightsData = async () => {
     // Fetch streetlights from Streetlights object upon initial page load
-    
+
     // Initialize map
     const mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
 
@@ -34,7 +34,6 @@ const fetchInitialStreetlightsData = async () => {
 
 
 const makePointsCluster = (pointsData, mymap) => {
-
     // makes clusters of points on map because rendering is very slow individually
     const markerClusters = L.markerClusterGroup();
 
@@ -81,19 +80,19 @@ const table = new Tabulator("#dataTable", {
     height: 300, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
     layout:"fitColumns", //fit columns to width of table (optional)
     columns: [ //Define Table Columns
-        {title:"id", field:"id", width:150},
-        {title:"base_colo", field:"base_colo", width:150},
-        {title:"contract_n", field:"contract_n", width:150},
-        {title:"decal_colo", field:"decal_colo", width:150},
-        {title:"decal_numb", field:"decal_numb", width:150},
-        {title:"install_da", field:"install_da", width:150},
-        {title:"lumens", field:"lumens", width:150},
-        {title:"mount_heig", field:"mount_heig", width:150},
-        {title:"nom_volt", field:"nom_volt", width:150},
-        {title:"owner", field:"owner", width:150},
-        {title:"style", field:"style", width:150},
-        {title:"watts", field:"watts", width:150},
-        {title:"work_effec", field:"work_effec", width:150},
+        {title:"id", field:"id", width:175},
+        {title:"base_colo", field:"base_colo", width:175},
+        {title:"contract_n", field:"contract_n", width:175},
+        {title:"decal_colo", field:"decal_colo", width:175},
+        {title:"decal_numb", field:"decal_numb", width:175},
+        {title:"install_da", field:"install_da", width:175},
+        {title:"lumens", field:"lumens", width:175},
+        {title:"mount_heig", field:"mount_heig", width:175},
+        {title:"nom_volt", field:"nom_volt", width:175},
+        {title:"owner", field:"owner", width:175},
+        {title:"style", field:"style", width:175},
+        {title:"watts", field:"watts", width:175},
+        {title:"work_effec", field:"work_effec", width:175},
     ],
     rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
@@ -106,7 +105,7 @@ const table = new Tabulator("#dataTable", {
 //////////////////////////////////////
 
 // functions to execute on button click
-const dataFilterClick = (event) => {
+const dataFilter = (event) => {
     event.preventDefault();
 
     // delete map html element
@@ -116,8 +115,8 @@ const dataFilterClick = (event) => {
     const parentElem = document.getElementById("dataSection")
     const newMap = document.createElement('div')
     newMap.setAttribute('id', 'mapid');
-    newMap.innerHTML = 'new map here';
     parentElem.prepend(newMap);
+
 
     // fetches filtered dataset to display on map
     dataFetch()
@@ -125,12 +124,22 @@ const dataFilterClick = (event) => {
     };
 
 const dataFetch = async () => {
+    // makes fetch request to database with user-provided parameters
+
+    // get select input values provided by user
+    let decal_colo = document.querySelector('#decal_colo').value.trim();
+    if (!decal_colo) {decal_colo=null};
+    let owner = document.querySelector('#owner').value.trim();
+
+    console.log(decal_colo, owner)
+
     const response = await fetch('/api/testFilter', {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify({ decal_colo, owner }),
+        headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-        console.log('good response');
         const filteredData = await response.json();
         
         // create map with filtered data
@@ -144,7 +153,7 @@ const dataFetch = async () => {
 }
 
 const createFilteredMap = (filteredData) => {
-    console.log(filteredData);
+    console.log("Data returned from request:", filteredData);
 
     // Initialize map
     var mymap = L.map('mapid').setView([38.033554, 	-78.48], 13);
@@ -185,11 +194,28 @@ const editRecordClick = (event) => {
 };
 
 
-// select elements from DOM
-const dataFilterBtn = document.querySelector('#dataFilterBtn').addEventListener('click', dataFilterClick);
+// select other button elements in DOM
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
 const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
 const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener('click', editRecordClick);
+
+
+///////////////////
+// Modal Buttons //
+///////////////////
+
+const logInput = (event) => {
+    event.preventDefault();
+
+    const decal_colo = document.querySelector('#decal_colo').value.trim();
+    console.log(decal_colo);
+}
+
+// 'Go!' button in data filter modal
+const makeDataFilterBtn = document.querySelector('#makeDataFilterBtn').addEventListener('click', dataFilter)
+
+
+
 
 
 

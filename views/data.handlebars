@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
 <!-- Import Tabulator css -->
 <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
+<!-- Import Bootstrap css -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <!-- link to our own css document -->
 <link rel="stylesheet" href="/css/datastyle.css">
 
@@ -15,12 +17,40 @@
 
     <!-- Buttons should go here -->
     <div id="buttonRow"> 
-        <button id="dataFilterBtn"> Data Filter </button>
+        <button id="dataFilterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"> Data Filter </button>
         <button id="exportBtn"> Export to .pdf </button>
         <button id="addRecordBtn"> Add Record </button>
         <button id="editRecordBtn"> Edit Records </button>
     </div>
     
+    <!-- Data Filter modal HTML, Appears upon clicking 'Data Filter' -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Choose Data Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                    <label for="decal_colo" class="form-label">decal_colo</label>
+                    <input class="form-control" id="decal_colo">
+                </div>
+                <div class="mb-3">
+                    <label for="owner" class="form-label">owner</label>
+                    <input class="form-control" id="owner">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id='makeDataFilterBtn' data-bs-dismiss="modal">Go!</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
 
     <!-- Tabulator Table -->
     <div id="dataTable"></div>
@@ -34,6 +64,8 @@
 <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
 <!-- Import Tabulator js -->
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+<!-- Import Bootstrap js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <!-- my own external JS file for map -->
 <script src="/js/data.js"></script>
 
