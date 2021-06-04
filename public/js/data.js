@@ -128,9 +128,9 @@ const dataFetch = async () => {
 
     // get select input values provided by user
     let decal_colo = document.querySelector('#decal_colo').value.trim();
-    if (!decal_colo) {decal_colo=null};
+    decal_colo = decal_colo.toString();
     let owner = document.querySelector('#owner').value.trim();
-
+    if (!owner) {owner = null} else {owner.toString()}
     console.log(decal_colo, owner)
 
     const response = await fetch('/api/testFilter', {
