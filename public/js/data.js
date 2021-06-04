@@ -126,32 +126,47 @@ const dataFilter = (event) => {
 const dataFetch = async () => {
     // makes fetch request to database with user-provided parameters
 
-    // get select input values provided by user
+    // get select input values provided by user.
+    // coerce data to be string, null, etc
     let decal_colo = document.querySelector('#decal_colo').value.trim();
     if (decal_colo === "Choose...") {decal_colo = null}
     
     let owner = document.querySelector('#owner').value.trim();
     if (owner === "Choose..." || owner === "None") {owner = null}
     
-    console.log(decal_colo, typeof(decal_colo), owner)
+    console.log(decal_colo, owner)
 
-    const response = await fetch('/api/testFilter', {
-        method: 'POST',
-        body: JSON.stringify({ decal_colo, owner }),
-        headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (response.ok) {
-        const filteredData = await response.json();
-        
-        // create map with filtered data
-        createFilteredMap(filteredData);
-
-        // put filtered data into data table
-        table.setData(filteredData);
-
-
+    //choose fetch response to make based on user filters
+    if (decal_colo === null) {
+        // if no decal_colo
+        const response = await fetch('/api/testFilterNoDC', {
+            method: 'POST',
+            body: JSON.stringify({ owner }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
+    } else if (decal_colo != null) {
+        // if decal_colo exists
+        const response = await fetch('/api/FilterDC', {
+            method: 'POST',
+            body: JSON.stringify({ decal_colo, owner }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const filteredData = await response.json();
+            // create map with filtered data
+            createFilteredMap(filteredData);
+            // put filtered data into data table
+            table.setData(filteredData);
+        }
     }
+
 }
 
 const createFilteredMap = (filteredData) => {

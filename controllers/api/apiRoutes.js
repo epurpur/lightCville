@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection');
 const { User, Streetlights } = require('../../models');
 
 
@@ -70,9 +71,27 @@ router.post('/dataFilter', async (req, res) => {
 //delete here
 // TODO: make route to retrieve filtered data
 // THIS IS A TEST
-router.post('/testFilter', async (req, res) => {
 
-  console.log('\n Test Filter \n');
+// route in the case there is no data_colo
+router.post('/FilterNoDC', async (req, res) => {
+
+  console.log('\n FilterNoDC \n');
+
+  // run sequelize query to find data that matches my parameters
+  const filterData = await Streetlights.findAll({
+      where: { 
+        owner: req.body.owner
+      },
+  });
+  console.log(`\n ${filterData.length} \n`)
+  res.status(200).json(filterData);
+});
+
+
+//route in case there is decal colo
+router.post('/FilterDC', async (req, res) => {
+
+  console.log('\n FilterDC \n');
 
   // run sequelize query to find data that matches my parameters
   const filterData = await Streetlights.findAll({
