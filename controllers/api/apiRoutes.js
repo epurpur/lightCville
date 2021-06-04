@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection');
 const { User, Streetlights } = require('../../models');
 
 
@@ -66,8 +67,6 @@ router.post('/dataFilter', async (req, res) => {
     console.log(`\n ${filterData.length} \n`)
     res.status(200).json(filterData);
 });
-
-
 
 
 module.exports = router;

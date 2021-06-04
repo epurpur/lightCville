@@ -33,13 +33,29 @@
         </div>
         <div class="modal-body">
             <form>
+
+                <div class="input-group mb-3">
+
+                </div>
+
                 <div class="mb-3">
                     <label for="decal_colo" class="form-label">decal_colo</label>
-                    <input class="form-control" id="decal_colo">
+                    <select class="custom-select w-50" id="decal_colo">
+                        <option selected>Choose...</option>
+                        <option value="GRE">GRE</option>
+                        <option value="YLO">YLO</option>
+                        <option value="LTBL">LTBL</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="owner" class="form-label">owner</label>
-                    <input class="form-control" id="owner">
+                    <select class="custom-select w-50" id="owner">
+                        <option selected>Choose...</option>
+                        <option value="None">None</option>
+                        <option value="DOM">DOM</option>
+                        <option value="PVT">PVT</option>
+                        <option value="MUN">MUN</option>
+                    </select>
                 </div>
             </form>
         </div>
