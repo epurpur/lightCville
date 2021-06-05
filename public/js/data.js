@@ -56,12 +56,15 @@ const makePointsCluster = (pointsData, mymap) => {
                        style: ${pointsData[i].style} <br>
                        watts: ${pointsData[i].watts} <br>
                        work_effec: ${pointsData[i].work_effec} <br>
+                       <br>
+                       <button type="button" class="btn btn-primary popupBtn" id="editRecordBtn" onclick="editRecordClick()">Edit</button>
+                       <button type="button" class="btn btn-primary popupBtn" id="deleteRecordBtn"  onclick="deleteRecordClick()">Delete</button>
                        `;
 
         const lat = pointsData[i].latitude;
         const lon = pointsData[i].longitude;
 
-        // Puts marker on the map
+        // Puts marker on the map and binds popup to it
         const m = L.marker([lat, lon]).bindPopup(popup);
 
         markerClusters.addLayer(m);
@@ -69,6 +72,7 @@ const makePointsCluster = (pointsData, mymap) => {
     const layerGroup = L.layerGroup([markerClusters]);
         
     mymap.addLayer(layerGroup);
+
 };
 
 
@@ -158,15 +162,21 @@ const addRecordClick = (event) => {
 
 
 const editRecordClick = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     console.log('edit record click');
+};
+
+
+const deleteRecordClick = (event) => {
+    // event.preventDefault();
+
+    console.log('delete record click');
 };
 
 // select other button elements in DOM
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
 const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
-const editRecordBtn = document.querySelector('#editRecordBtn').addEventListener('click', editRecordClick);
 
 
 
