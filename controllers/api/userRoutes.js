@@ -23,20 +23,16 @@ router.get('/', (req, res) => {
       if (!userData) {
         res.status(400).json({ message: 'No user with that email address!' });
         return;
-      }
+      }});
   
       const validPassword = userData.checkPassword(req.body.password);
   
       if (!validPassword) {
         res.status(400).json({ message: 'Incorrect password!' });
         return;
-      }
-
-      //render to homepage if valid login
-      res.render('home');
-    }).catch(err); {
-        res.status(400).json(err);
-    }
+      };
+    
+     
     // Create new user 
 
 router.post('/registerUser', async (req, res) => {
@@ -50,8 +46,25 @@ router.post('/registerUser', async (req, res) => {
         req.session.loggedIn = true;
   
         res.json({ user: userData, message: 'You are now logged in!' });
-      })
-    };
+      });
+       //render to homepage if valid login
+       res.render('home');
+    }catch(err) {
+        res.status(400).json(err);
+    }
+    });
+
+
+    router.post('/logout', (req, res) => {
+        console.log(`\n Logged in: ${req.session.logged_in}  \n`);
+        
+        if (req.session.logged_in) {
+            res.render('login');
+        }
+        
+    });
+
+
 
  
  module.exports = router;
