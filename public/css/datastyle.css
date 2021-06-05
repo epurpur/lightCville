@@ -21,6 +21,10 @@
     font-size: 15px;
 }
 
+.popupBtn {
+    width: 80px;
+}
+
 /* button styles */
 #buttonRow {
     width: 95%;
@@ -30,8 +34,9 @@
 }
 
 button {
-    width: 25%;
+    width: 33.3%;
     font-size: 30px;
+    border-radius: 5px;
 }
 
 /* data table styles */
@@ -44,10 +49,21 @@ button {
 /* Modal Window Styles */
 /***********************/
 
+/* Data filter modal */
 .modal-body {
     font-size: 20px;
 }
 
 .form-label {
-    width: 100px;
+    width: 110px;
 }
+
+
+/* Add record modal */
+
+.non-dropdown {
+    display: flex;
+    flex-direction: row;
+}
+
+
