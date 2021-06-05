@@ -153,14 +153,6 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-
-const addRecordClick = (event) => {
-    event.preventDefault();
-
-    console.log('add record click');
-};
-
-
 const editRecordClick = (event) => {
     // event.preventDefault();
 
@@ -176,17 +168,14 @@ const deleteRecordClick = (event) => {
 
 // select other button elements in DOM
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
-const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
-
 
 
 ///////////////////
 // Modal Buttons //
 ///////////////////
 
-// 'Go!' button in data filter modal
+// 'Filter' button in data filter modal
 const makeDataFilterBtn = document.querySelector('#makeDataFilterBtn').addEventListener('click', dataFilter)
-
 
 const dataFetch = async () => {
     // makes fetch request to database with user-provided parameters
@@ -267,8 +256,21 @@ const dataFetch = async () => {
 
 
 
+const addRecord = () => {
+    // adds streetlight record to database
 
+    // start by selecting values of all input fields
+    let base_colo = document.querySelector('#base_colo').value.trim();
+    if (!base_colo) {base_colo = null};
+    let contract_n = document.querySelector('#contract_n').value.trim();
+    if (!contract_n) {contract_n = null};
 
+    // log input values
+    console.log(base_colo);
+}
+
+// 'Add' button in Add Record modal
+const addBtn = document.querySelector('#addBtn').addEventListener('click', addRecord);
 
 
 // execute on page load

@@ -58,6 +58,15 @@ button {
     width: 110px;
 }
 
+.modal-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.modal-footer button {
+    width: 100px;
+}
 
 /* Add record modal */
 
