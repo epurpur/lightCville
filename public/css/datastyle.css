@@ -7,6 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    
 }
 
 /* map styles */ 
@@ -31,13 +33,17 @@
     display: flex;
     justify-content: center;
     margin: 10px 0 10px 0;
+    
 }
 
 button {
     width: 33.3%;
     font-size: 30px;
     border-radius: 5px;
+    border: black;
+    border-style: solid;
 }
+
 
 /* data table styles */
 #dataTable {

@@ -10,6 +10,7 @@
     <li>
       <ul>
        <li><a href="#VIEW LIVE APPLICATION">VIEW LIVE APPLICATION</a></li>
+       <li><a href="#INSTALLATION">INSTALLATION</a></li>
         <li><a href="#PROJECT SUMMARY">PROJECT SUMMARY</a></li>
         <li><a href="#USER STORY">USER STORY</a></li>
         <li><a href="#NEW TECH">NEW TECH</a></li>
@@ -24,6 +25,8 @@
 ## VIEW LIVE APPLICATION 
 
 
+## INSTALLATION
+To run this app 
 
 ## PROJECT SUMMARY: 
 Streetlights have a profound impact on the vitality of a city. Good street lighting reduces crime, increases night-time economic activity, and prevents auto accidents. The streetlight network is one of the most large-scale and expensive components of a city’s public infrastructure, and streetlights are a major contributor to a city’s electricity use and carbon footprint.
@@ -32,6 +35,7 @@ This project will tackle the problem of wrangling Charlottesville’s various st
 
 ## USER STORY: 
 •	As a… City of Charlottesville employee
+• I should be able to Login or creat an account ,
 •	I want to… View and modify data about the streetlights in the City of Charlottesville
 •	So that… the city can make better informed decisions about maintenance, future development, etc.
 
@@ -56,14 +60,16 @@ This project will tackle the problem of wrangling Charlottesville’s various st
 ![screenshot](public/images/2.jpg)
 ![screenshot](public/images/3.jpg)
 ![screenshot](public/images/4.jpg)
+![screenshot](public/images/5.jpg)
+![screenshot](public/images/6.jpg)
 
 ## CONTRIBUTIONS AND ROLES:
 
 •   Erich Purpur: Back End and support [Github](https://github.com/epurpur)
 
-•	Shaima Jobran: Back End [Github](https://github.com/shaimajobran)
+•	Shaima Jobran: Back End and Front End [Github](https://github.com/shaimajobran)
 
 •	Christopher Zacharias: Front End [Github](https://github.com/ChrisZ304)
 
-•	Jordan Koenig : Front End [Github](https://github.com/jordankoenig)
+•	Jordan Koenig : [Github](https://github.com/jordankoenig)
 
