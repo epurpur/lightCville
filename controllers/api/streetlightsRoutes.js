@@ -25,7 +25,10 @@ router.post('/', (req, res) => {
         
           res.status(200).json(streetlights);
           
-       });
+       })
+       .catch(err => {
+           res.status(400).json(err);
+       })
        
     
   });

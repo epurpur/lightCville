@@ -310,7 +310,7 @@ const addRecord = async () => {
     // take all values and make fetch request to database to create new streetlight record
     const response = await fetch('/api/streetlights', {
         method: 'POST',
-        body: { base_colo, contract_n, decal_colo, decal_numb, install_da, lumens, mount_heig, nom_volt, owner, style, watts, work_effec, latitude, longitude },
+        body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, install_da, lumens, mount_heig, nom_volt, owner, style, watts, work_effec, latitude, longitude }),
         headers: { 'Content-Type': 'application/json' },
     });
     if (response.ok) {
