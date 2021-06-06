@@ -53,5 +53,26 @@ router.post('/', (req, res) => {
                 res.status(500).json(err);
             });
   });
-  module.exports = router;
+
+
+// edit streetlight record
+router.put('/edit/:id', (req, res) => {
+    //calls update method on Streetlights model
+    Streetlights.update({
+        owner: req.body.owner
+    },
+    {
+        where: {
+            id: req.params.id,
+        }
+    })
+    .then(updatedRecord => {
+        res.json(updatedRecord);
+    })
+    .catch(err => res.json(err));
+});
+
+
+
+module.exports = router;
   
