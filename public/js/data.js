@@ -153,14 +153,6 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-
-const addRecordClick = (event) => {
-    event.preventDefault();
-
-    console.log('add record click');
-};
-
-
 const editRecordClick = (event) => {
     // event.preventDefault();
 
@@ -176,17 +168,14 @@ const deleteRecordClick = (event) => {
 
 // select other button elements in DOM
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
-const addRecordBtn = document.querySelector('#addRecordBtn').addEventListener('click', addRecordClick);
-
 
 
 ///////////////////
 // Modal Buttons //
 ///////////////////
 
-// 'Go!' button in data filter modal
+// 'Filter' button in data filter modal
 const makeDataFilterBtn = document.querySelector('#makeDataFilterBtn').addEventListener('click', dataFilter)
-
 
 const dataFetch = async () => {
     // makes fetch request to database with user-provided parameters
@@ -267,8 +256,73 @@ const dataFetch = async () => {
 
 
 
+const addRecord = async () => {
+    // adds streetlight record to database
 
+    // start by selecting values of all input fields
+    let base_colo = document.querySelector('#base_colo_add').value.trim();
+    if (!base_colo) {base_colo = null};
+    
+    let contract_n = document.querySelector('#contract_n_add').value.trim();
+    if (!contract_n) {contract_n = null};
+    
+    let decal_colo = document.querySelector('#decal_colo_add');
+    decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
+    if (decal_colo === "Choose...") {decal_colo = null};
 
+    let decal_numb = document.querySelector('#decal_numb_add');
+    decal_numb = decal_numb.options[decal_numb.selectedIndex].text;
+    if (decal_numb === "Choose...") {decal_numb = null};
+
+    //gets current datetime stamp
+    let install_da = new Date().toLocaleString();
+
+    let lumens = document.querySelector('#lumens_add');
+    lumens = lumens.options[lumens.selectedIndex].text;
+    if (lumens === "Choose...") {lumens = null};
+ 
+    let mount_heig = document.querySelector('#mount_heig_add').value.trim();
+    if (!mount_heig) {mount_heig = null};
+
+    let nom_volt = document.querySelector('#nom_volt_add').value.trim();
+    if (!nom_volt) {nom_volt = null};
+
+    let owner = document.querySelector('#owner_add');
+    owner = owner.options[owner.selectedIndex].text;
+    if (owner === "Choose..." || owner === 'None') {owner = null};
+
+    let style = document.querySelector('#style_add');
+    style = style.options[style.selectedIndex].text;
+    if (style === "Choose...") {style = null};
+
+    let watts = document.querySelector('#watts_add');
+    watts = watts.options[watts.selectedIndex].text;
+    if (watts === "Choose...") {watts = null};
+
+    let work_effec = document.querySelector('#work_effec_add').value.trim();
+    if (work_effec === '') {work_effec = null};
+
+    //latitude and longitude are required values
+    let latitude = document.querySelector('#latitude_add').value.trim();
+    let longitude = document.querySelector('#longitude_add').value.trim();
+    
+
+    // take all values and make fetch request to database to create new streetlight record
+    const response = await fetch('/api/streetlights', {
+        method: 'POST',
+        body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, install_da, lumens, mount_heig, nom_volt, owner, style, watts, work_effec, latitude, longitude }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+        console.log('it worked!')
+    } else {
+        console.log('no worky')
+    }
+
+}
+
+// 'Add' button in Add Record modal
+const addBtn = document.querySelector('#addBtn').addEventListener('click', addRecord);
 
 
 // execute on page load
