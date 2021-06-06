@@ -7,6 +7,7 @@ const { Streetlights } = require('../../models');
 router.post('/', (req, res) => {
     Streetlights.create({
         base_colo: req.body.base_colo,
+        contract_n: req.body.contract_n,
         decal_colo: req.body.decal_colo,
         decal_numb: req.body.decal_numb,
         install_da: req.body.install_da,
