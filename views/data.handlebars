@@ -207,7 +207,60 @@
     </div>
    
 
-
+    <!-- Edit Record Modal -->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" aria-labelledby="editRecordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editRecordModalLabel">Edit Record ID: <span id="editID"></span></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                    <label for="decal_colo" class="form-label">decal_colo</label>
+                    <select class="custom-select w-50" id="decal_colo">
+                        <option selected>Choose...</option>
+                        <option value="GRE">GRE</option>
+                        <option value="YLO">YLO</option>
+                        <option value="LTBL">LTBL</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="owner" class="form-label">owner</label>
+                    <select class="custom-select w-50" id="owner">
+                        <option selected>Choose...</option>
+                        <option value="None">None</option>
+                        <option value="DOM">DOM</option>
+                        <option value="PVT">PVT</option>
+                        <option value="MUN">MUN</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="lumens" class="form-label">lumens</label>
+                    <select class="custom-select w-50" id="lumens">
+                        <option selected>Choose...</option>
+                        <option value="3300">3300</option>
+                        <option value="5000">5000</option>
+                        <option value="7000">7000</option>
+                        <option value="8000">8000</option>
+                        <option value="11000">11000</option>
+                        <option value="14000">14000</option>
+                        <option value="20000">20000</option>
+                        <option value="23000">23000</option>
+                        <option value="42000">42000</option>
+                        <option value="53000">53000</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id='makeDataFilterBtn' data-bs-dismiss="modal">Edit</button>
+        </div>
+        </div>
+    </div>
+    </div>
 
     <!-- Tabulator Table -->
     <div id="dataTable"></div>

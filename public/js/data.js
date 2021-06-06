@@ -57,7 +57,7 @@ const makePointsCluster = (pointsData, mymap) => {
                        watts: ${pointsData[i].watts} <br>
                        work_effec: ${pointsData[i].work_effec} <br>
                        <br>
-                       <button type="button" class="btn btn-primary popupBtn" data-idNumEdit="${pointsData[i].id}" id="editRecordBtn" onclick="editRecordClick()">Edit</button>
+                       <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" onclick="editRecord(${pointsData[i].id})">Edit</button>
                        <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn"  onclick="deleteRecord()">Delete</button>
                        `;
 
@@ -153,11 +153,13 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-const editRecordClick = (event) => {
-    // event.preventDefault();
+const editRecord = (recordID) => {
+    // allows editing chosen record
 
-    console.log('edit record click');
+    //recordID is id of chosen record, passed in from popup window
+    const id = document.querySelector('#editID').innerHTML = recordID;
 };
+
 
 
 const deleteRecord = async () => {
