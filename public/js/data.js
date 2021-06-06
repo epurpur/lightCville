@@ -57,8 +57,8 @@ const makePointsCluster = (pointsData, mymap) => {
                        watts: ${pointsData[i].watts} <br>
                        work_effec: ${pointsData[i].work_effec} <br>
                        <br>
-                       <button type="button" class="btn btn-primary popupBtn" id="editRecordBtn" onclick="editRecordClick()">Edit</button>
-                       <button type="button" class="btn btn-primary popupBtn" id="deleteRecordBtn"  onclick="deleteRecordClick()">Delete</button>
+                       <button type="button" class="btn btn-primary popupBtn" data-idNumEdit="${pointsData[i].id}" id="editRecordBtn" onclick="editRecordClick()">Edit</button>
+                       <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn"  onclick="deleteRecord()">Delete</button>
                        `;
 
         const lat = pointsData[i].latitude;
@@ -160,10 +160,21 @@ const editRecordClick = (event) => {
 };
 
 
-const deleteRecordClick = (event) => {
-    // event.preventDefault();
+const deleteRecord = async () => {
+    // deletes the chosen record when clicking 'delete' button in popup window
+    
+    // select data-idNumDelete attribute of 'edit' button, which holds value of record id
+    const recordID = document.querySelector('#deleteRecordBtn').getAttribute('data-idNumDelete');  
 
-    console.log('delete record click');
+    // send fetch request to delete chosen record
+    const response = await fetch(`/api/streetlights/${recordID}`, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        alert('Record Deleted!');
+        //reload page
+        window.location.reload();
+    }
 };
 
 // select other button elements in DOM
@@ -314,9 +325,11 @@ const addRecord = async () => {
         headers: { 'Content-Type': 'application/json' },
     });
     if (response.ok) {
-        console.log('it worked!')
+        alert('Record Added')
+        //reload page in browser
+        window.location.reload();
     } else {
-        console.log('no worky')
+        alert('Invalid input');
     }
 
 }
