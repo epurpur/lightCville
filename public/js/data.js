@@ -1,3 +1,4 @@
+
 /////////////////
 // Leaflet map //
 /////////////////
@@ -29,6 +30,9 @@ const fetchInitialStreetlightsData = async () => {
 
         //put data into data table
         table.setData(streetlightsData);
+
+        //set currentData so that it can be exported to a csv
+        currentData = streetlightsData;
 
     }
 }
@@ -149,11 +153,70 @@ const table = new Tabulator("#dataTable", {
 // add event handlers to each button//
 //////////////////////////////////////
 
-const exportClick = (event) => {
-    event.preventDefault();
+//This holds current table data
+let currentData = {};
 
-    console.log('export button click');
+const exportToCSV = async () => {
+    // takes current filtered version of dataset and exports to csv
+    // uses global currentData variable
+
+    console.log(currentData);
+    
+    // //convert array to csv
+    const csvString = convertToCSV(currentData);
+    
+    // download filtered dataset as a csv file
+    download(csvString, 'streetlightsData.csv', 'text/csv;encoding:utf-8');
 };
+
+function convertToCSV(objArray) {
+    // converts JSON object to CSV
+
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += array[i][index];
+        }
+        str += line + '\r\n';
+    }
+    //returns CSV as a string
+    return str;
+}
+
+var download = function(content, fileName, mimeType) {
+    // The download function takes a CSV string, the filename and mimeType as parameters
+    // Scroll/look down at the bottom of this snippet to see how download is called
+
+    var a = document.createElement('a');
+    mimeType = mimeType || 'application/octet-stream';
+    
+    if (navigator.msSaveBlob) { // IE10
+    navigator.msSaveBlob(new Blob([content], {
+        type: mimeType
+        }), fileName);
+    } else if (URL && 'download' in a) { //html5 A[download]
+    a.href = URL.createObjectURL(new Blob([content], {
+        type: mimeType
+    }));
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    } else {
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+    }
+}
+
+
+
+// select other button elements in DOM
+const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportToCSV);
+
 
 const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec) => {
     // allows editing chosen record
@@ -255,8 +318,6 @@ const deleteRecord = async () => {
     }
 };
 
-// select other button elements in DOM
-const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportClick);
 
 
 ///////////////////
@@ -280,9 +341,6 @@ const dataFetch = async () => {
     let lumens = document.querySelector('#lumens').value.trim();
     if (lumens === "Choose...") {lumens = null};
 
-    // log user choices
-    console.log(decal_colo, owner, lumens)
-
     //choose fetch response to make based on user filters
     if (decal_colo === null && lumens != null) {
         // if no decal_colo but yes lumens
@@ -297,6 +355,8 @@ const dataFetch = async () => {
             createFilteredMap(filteredData);
             // put filtered data into data table
             table.setData(filteredData);
+            //set currentData so that it can be exported to a csv
+            currentData = filteredData;
         }
     } else if (decal_colo === null && lumens === null) {
         // if no decal and no lumens
@@ -311,6 +371,8 @@ const dataFetch = async () => {
             createFilteredMap(filteredData);
             // put filtered data into data table
             table.setData(filteredData);
+            //set currentData so that it can be exported to a csv
+            currentData = filteredData;
         }
     } else if (decal_colo != null && lumens === null) {
         // if yes decal_colo and no lumens
@@ -325,6 +387,8 @@ const dataFetch = async () => {
             createFilteredMap(filteredData);
             // put filtered data into data table
             table.setData(filteredData);
+            //set currentData so that it can be exported to a csv
+            currentData = filteredData;
         }
     } else if (decal_colo != null && lumens != null) {
         // if yes decal_colo and yes lumens
@@ -339,10 +403,11 @@ const dataFetch = async () => {
             createFilteredMap(filteredData);
             // put filtered data into data table
             table.setData(filteredData);
+            //set currentData so that it can be exported to a csv
+            currentData = filteredData;
         }
     }
 }
-
 
 
 const addRecord = async () => {
