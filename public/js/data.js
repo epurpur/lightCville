@@ -58,7 +58,7 @@ const makePointsCluster = (pointsData, mymap) => {
                        work_effec: ${pointsData[i].work_effec} <br>
                        <br>
                        <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" 
-                       onclick="editRecord(${pointsData[i].id},${pointsData[i].base_colo},${pointsData[i].contract_n},${pointsData[i].decal_numb},${pointsData[i].lumens},${pointsData[i].mount_heig},${pointsData[i].nom_volt},${pointsData[i].watts})">Edit</button>
+                       onclick="editRecord(${pointsData[i].id},${pointsData[i].base_colo},${pointsData[i].contract_n},'${pointsData[i].decal_colo}',${pointsData[i].decal_numb},${pointsData[i].lumens},${pointsData[i].mount_heig},${pointsData[i].nom_volt},'${pointsData[i].owner}','${pointsData[i].style}',${pointsData[i].watts},'${pointsData[i].work_effec}')">Edit</button>
                        
                        <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn"  onclick="deleteRecord()">Delete</button>
                        `;
@@ -155,7 +155,7 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-const editRecord = (recordID, base_colo, contract_n, decal_numb, lumens, mount_heig, nom_volt, watts) => {
+const editRecord = (recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec) => {
     // allows editing chosen record
 
     // use all elements in 
@@ -163,24 +163,19 @@ const editRecord = (recordID, base_colo, contract_n, decal_numb, lumens, mount_h
     document.querySelector('#editID').innerHTML = recordID;
     document.querySelector('#editbase_colo').setAttribute('value', base_colo);
     document.querySelector('#editcontract_n').setAttribute('value', contract_n);
-
-    // for decal_colo dropdown
-    // const edit_decalcolo = document.querySelector('#editdecal_colo [value="' + decal_colo + '"]').selected = true;
-    
+    document.querySelector('#editdecal_colo').value = decal_colo;
     document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
     document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
     document.querySelector('#editmount_heig').innerHTML = mount_heig;
     document.querySelector('#editnom_volt').innerHTML = nom_volt;
-    
-    // for owner dropdown
-    // document.querySelector('#editowner [value="' + owner + '"]').selected = true;
-
-    // for style dropdown
-    // document.querySelector('#editstyle [value="' + style + '"]').selected = true;
-
+    document.querySelector('#editowner').value = owner;
+    document.querySelector('#editstyle').value = style;
     document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
-
-    // for work_effec date picker
+    
+    //need to do some string slicing to set date
+    // '2015-12-31';  // date must be in this format
+    work_effec = work_effec.slice(0, work_effec.indexOf('T'));
+    document.querySelector('#editwork_effec').value = work_effec;
 };
 
 
