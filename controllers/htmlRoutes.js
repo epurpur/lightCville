@@ -6,6 +6,31 @@ const { Streetlights, User } = require('../models');
 // router.get('/home', async (req, res) => {
 //   res.render('home');
 // });
+// GET all galleries for homepage
+router.get('/', async (req, res) => {
+  try {
+    const userData = await User.findAll({
+      include: [
+        {
+          model:User ,
+          attributes: ['loggedIn'],
+        },
+      
+      ],
+    });
+    
+    const users = userData.map((user)=> 
+    user.get({plain:true })
+    );
+    res.render('login',{
+      users,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err){
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 
 // TODO: make route to render '/login' view
@@ -13,8 +38,6 @@ const { Streetlights, User } = require('../models');
 router.get('/login', async (req,res)=>{
   res.render('login');
 });
-
-
 
 
 
