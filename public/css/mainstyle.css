@@ -1,8 +1,10 @@
 /* Global Styles */
-body {font-family:'Times New Roman', Times, serif;}
 * {box-sizing: border-box}
 
-
+body {
+  font-family:'Times New Roman', Times, serif;
+  font-size: 25px;
+}
 
  h1 {
   font-family:'Times New Roman', Times, serif;
@@ -49,7 +51,7 @@ button {
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
-  
+  font-size: 25px;
 }
 
 button:hover {
