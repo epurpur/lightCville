@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { route } = require('../../../Week14/ur-rich-fsf-pt-02-2021-u-c/Bootcamp14_TechBlog/controllers/api/blogpostRoutes');
 const { Streetlights } = require('../../models');
 
 
@@ -99,4 +98,3 @@ router.get('/oneStreetlight/:id', async (req, res) => {
 });
 
 module.exports = router;
-  

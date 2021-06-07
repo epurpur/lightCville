@@ -16,7 +16,7 @@ router.get('/streetlights', async (req, res) => {
 
 //route to make new User in database
 router.post('/', (req, res) => {
-  console.log('hello')
+
   User.create({
     name: req.body.name,
     email: req.body.email,
