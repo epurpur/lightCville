@@ -281,6 +281,7 @@
                     <label for="editowner" class="form-label">owner</label>
                     <select class="custom-select w-50" id="editowner">
                         <option selected>Choose...</option>
+                        <option value=""></option>
                         <option value="None">None</option>
                         <option value="DOM">DOM</option>
                         <option value="PVT">PVT</option>
@@ -312,12 +313,11 @@
                     <label for="editwork_effec" class="form-label">work_effec</label>
                     <input type="date" class="form-control w-50" id="editwork_effec" placeholder="Choose Date">
                 </div>
-
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id='makeDataFilterBtn' data-bs-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-primary" id='saveDataFilterBtn' data-bs-dismiss="modal" onclick="saveEditRecord()">Save</button>
         </div>
         </div>
     </div>

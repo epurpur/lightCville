@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { route } = require('../../../Week14/ur-rich-fsf-pt-02-2021-u-c/Bootcamp14_TechBlog/controllers/api/blogpostRoutes');
 const { Streetlights } = require('../../models');
 
 
@@ -59,7 +60,17 @@ router.post('/', (req, res) => {
 router.put('/edit/:id', (req, res) => {
     //calls update method on Streetlights model
     Streetlights.update({
-        owner: req.body.owner
+        base_colo: req.body.base_colo,
+        contract_n: req.body.contract_n,
+        decal_colo: req.body.decal_colo,
+        decal_numb: req.body.decal_numb,
+        lumens: req.body.lumens,
+        mount_heig: req.body.mount_heig,
+        nom_volt: req.body.nom_volt,
+        owner: req.body.owner,
+        style: req.body.style,
+        watts: req.body.watts,
+        work_effec: req.body.work_effec
     },
     {
         where: {
@@ -73,6 +84,19 @@ router.put('/edit/:id', (req, res) => {
 });
 
 
+// view individual streetlight data by ID number
+router.get('/oneStreetlight/:id', async (req, res) => {
+
+    const streetlightData = await Streetlights.findOne({
+        where: {id: req.params.id}
+    });
+
+    if (!streetlightData) {
+        res.status(404).json({ message: 'No streetlight found with that id number' });
+    } else {
+        res.status(200).json(streetlightData);
+    }
+});
 
 module.exports = router;
   
