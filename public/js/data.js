@@ -57,8 +57,10 @@ const makePointsCluster = (pointsData, mymap) => {
                        watts: ${pointsData[i].watts} <br>
                        work_effec: ${pointsData[i].work_effec} <br>
                        <br>
-                       <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" onclick="editRecord(${pointsData[i].id})">Edit</button>
-                       <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn"  onclick="deleteRecord()">Delete</button>
+                       <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" 
+                       onclick="editRecord(${pointsData[i].id},${pointsData[i].base_colo},${pointsData[i].contract_n},'${pointsData[i].decal_colo}',${pointsData[i].decal_numb},${pointsData[i].lumens},${pointsData[i].mount_heig},${pointsData[i].nom_volt},'${pointsData[i].owner}','${pointsData[i].style}',${pointsData[i].watts},'${pointsData[i].work_effec}')">Edit</button>
+                       
+                       <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn" onclick="deleteRecord()">Delete</button>
                        `;
 
         const lat = pointsData[i].latitude;
@@ -153,14 +155,89 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-const editRecord = (recordID) => {
+const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec) => {
     // allows editing chosen record
 
+    // use all elements in 
     //recordID is id of chosen record, passed in from popup window
-    const id = document.querySelector('#editID').innerHTML = recordID;
+    document.querySelector('#editID').innerHTML = recordID;
+    document.querySelector('#editbase_colo').setAttribute('value', base_colo);
+    document.querySelector('#editcontract_n').setAttribute('value', contract_n);
+    document.querySelector('#editdecal_colo').value = decal_colo;
+    document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
+    document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
+    document.querySelector('#editmount_heig').innerHTML = mount_heig;
+    document.querySelector('#editnom_volt').innerHTML = nom_volt;
+    document.querySelector('#editowner').value = owner;
+    document.querySelector('#editstyle').value = style;
+    document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
+    
+    //need to do some string slicing to set date
+    // '2015-12-31';  // date must be in this format
+    work_effec = work_effec.slice(0, work_effec.indexOf('T'));
+    document.querySelector('#editwork_effec').value = work_effec;
 };
 
 
+const saveEditRecord = async () => {
+    // executes fetch request to update chosen record
+
+    //select all updated record values
+    const recordID = document.querySelector('#editID').innerHTML;
+    
+    let base_colo = document.querySelector('#editbase_colo').value.trim();
+    if (!base_colo) {base_colo = null};
+    
+    let contract_n = document.querySelector('#editcontract_n').value.trim();
+    if (!contract_n) {contract_n = null};
+    
+    let decal_colo = document.querySelector('#editdecal_colo');
+    decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
+    if (decal_colo === "Choose...") {decal_colo = null};
+
+    let decal_numb = document.querySelector('#editdecal_numb');
+    decal_numb = decal_numb.options[decal_numb.selectedIndex].text;
+    if (decal_numb === "Choose...") {decal_numb = null};
+
+    let lumens = document.querySelector('#editlumens');
+    lumens = lumens.options[lumens.selectedIndex].text;
+    if (lumens === "Choose...") {lumens = null};
+ 
+    let mount_heig = document.querySelector('#editmount_heig').value.trim();
+    if (!mount_heig) {mount_heig = null};
+
+    let nom_volt = document.querySelector('#editnom_volt').value.trim();
+    if (!nom_volt) {nom_volt = null};
+
+    let owner = document.querySelector('#editowner');
+    owner = owner.options[owner.selectedIndex];
+    if (owner === "Choose..." || owner === 'None' || typeof(owner) == 'undefined') {owner = null};
+
+    let style = document.querySelector('#editstyle');
+    style = style.options[style.selectedIndex].text;
+    if (style === "Choose...") {style = null};
+
+    let watts = document.querySelector('#editwatts');
+    watts = watts.options[watts.selectedIndex].text;
+    if (watts === "Choose...") {watts = null};
+
+    let work_effec = document.querySelector('#editwork_effec').value.trim();
+    if (work_effec === '') {work_effec = null};
+    console.log(recordID);
+    console.log(recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec);
+    // make fetch request to PUT route to update record
+    const response = await fetch(`/api/streetlights/edit/${recordID}`, {
+        method: 'PUT',
+        body: JSON.stringify({ recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
+        headers: {'Content-Type': 'application/json'}
+    });
+    if (response.ok) {
+        console.log(response);
+        alert('Record Updated!');
+        //reload page
+        window.location.reload();        
+    }
+}
 
 const deleteRecord = async () => {
     // deletes the chosen record when clicking 'delete' button in popup window
