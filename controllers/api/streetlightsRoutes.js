@@ -100,9 +100,17 @@ router.get('/oneStreetlight/:id', async (req, res) => {
 
 
 // This route will seed our Data Base
-router.post('/seeds',async (req,res)=>{
-    const seedData = await seedDatabase()
-    // console.log(seedData);
-})
+router.post('/seeds', async (req,res)=>{
+    try {
+        seedDatabase().then(() => {
+            res.send('Successful Seed');
+        }); 
+    } catch (err) {
+        console.log('Seed Error', err);
+        res.sendStatus(`There was a problem ${err.message}`);
+    }
+});
+
+
 module.exports = router;
   
