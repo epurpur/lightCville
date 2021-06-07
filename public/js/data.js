@@ -57,7 +57,9 @@ const makePointsCluster = (pointsData, mymap) => {
                        watts: ${pointsData[i].watts} <br>
                        work_effec: ${pointsData[i].work_effec} <br>
                        <br>
-                       <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" onclick="editRecord(${pointsData[i].id})">Edit</button>
+                       <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" 
+                       onclick="editRecord(${pointsData[i].id},${pointsData[i].base_colo},${pointsData[i].contract_n},${pointsData[i].decal_numb},${pointsData[i].lumens},${pointsData[i].mount_heig},${pointsData[i].nom_volt},${pointsData[i].watts})">Edit</button>
+                       
                        <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn"  onclick="deleteRecord()">Delete</button>
                        `;
 
@@ -153,11 +155,32 @@ const exportClick = (event) => {
     console.log('export button click');
 };
 
-const editRecord = (recordID) => {
+const editRecord = (recordID, base_colo, contract_n, decal_numb, lumens, mount_heig, nom_volt, watts) => {
     // allows editing chosen record
 
+    // use all elements in 
     //recordID is id of chosen record, passed in from popup window
-    const id = document.querySelector('#editID').innerHTML = recordID;
+    document.querySelector('#editID').innerHTML = recordID;
+    document.querySelector('#editbase_colo').setAttribute('value', base_colo);
+    document.querySelector('#editcontract_n').setAttribute('value', contract_n);
+
+    // for decal_colo dropdown
+    // const edit_decalcolo = document.querySelector('#editdecal_colo [value="' + decal_colo + '"]').selected = true;
+    
+    document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
+    document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
+    document.querySelector('#editmount_heig').innerHTML = mount_heig;
+    document.querySelector('#editnom_volt').innerHTML = nom_volt;
+    
+    // for owner dropdown
+    // document.querySelector('#editowner [value="' + owner + '"]').selected = true;
+
+    // for style dropdown
+    // document.querySelector('#editstyle [value="' + style + '"]').selected = true;
+
+    document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
+
+    // for work_effec date picker
 };
 
 
