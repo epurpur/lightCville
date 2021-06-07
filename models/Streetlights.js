@@ -56,7 +56,7 @@ Streetlights.init(
       allowNull: true,
     },
     base_colo:{
-      type :DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     latitude:{
