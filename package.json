@@ -18,8 +18,10 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
+    "leaflet": "^1.7.1",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "tabulator": "^0.2.40"
   },
   "devDependencies": {
     "eslint": "^7.12.1",
