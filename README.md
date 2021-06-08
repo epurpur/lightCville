@@ -88,7 +88,7 @@ This project will tackle the problem of wrangling Charlottesville’s various st
   * Connect-session-sequelize 
   * Handlebars
   * GET & POST API routes to add/rendering data
-  * MVC structure(Models,Views,Controllers)
+  * MVC Framework(Models,Views,Controllers)
 
 
 
