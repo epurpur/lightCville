@@ -6,21 +6,15 @@
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
-  <ul>
-    <li>
-      <ul>
-       <li><a href="#PROJECT REQUIREMENTS">PROJECT REQUIREMENT</a></li>
-       <li><a href="#DEPLOYED LINKS">DEPLOYED LINKS</a></li>
-        <li><a href="#PROJECT SUMMARY">PROJECT SUMMARY</a></li>
-        <li><a href="#USER STORY">USER STORY</a></li>
-        <li><a href="#NEW TECH">NEW TECH</a></li>
-          <li><a href="#BUILT WITH">BUILT WITH</a></li>
-           <li><a href="#SCREEN SHOTS">SCREEN SHOTS</a></li>
-        <li><a href="#CONTRIBUTION AND ROLES">CONTRIBUTION ANS ROLES</a></li>
-      </ul>
-    </li>
-    </ul>
-</details>
+  
+[PROJECT REQUIREMENTS](#project-requirements)
+[DEPLOYED LINKS](#depoloyed-links)
+[PROJECT SUMMARY](#project-summary)
+[USER STORY](#user-story)
+[NEW TECH](#new-tech)
+[BUILT WITH](#built-with)
+[SCREEN SHOTS](#screen-shots)
+[CONTRIBUTION AND ROLES](#contribution-and-roles)
 
 ## PROJECT REQUIREMENT
 
