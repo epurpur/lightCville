@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { Streetlights } = require('../../models');
 const streetlightData = require('../../seeds/streetlights.json');
-const {seedDatabase,newData} = require('../../seeds/seed');
 
 
 //route to make new streetlight in database
@@ -99,17 +98,7 @@ router.get('/oneStreetlight/:id', async (req, res) => {
 });
 
 
-// This route will seed our Data Base
-router.post('/seeds', async (req,res)=>{
-    try {
-        seedDatabase().then(() => {
-            res.send('Successful Seed');
-        }); 
-    } catch (err) {
-        console.log('Seed Error', err);
-        res.sendStatus(`There was a problem ${err.message}`);
-    }
-});
+
 
 
 module.exports = router;
