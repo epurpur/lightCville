@@ -1,5 +1,3 @@
-var L = require('leaflet');
-var Tabulator = require('tabulator-tables');
 
 /////////////////
 // Leaflet map //
