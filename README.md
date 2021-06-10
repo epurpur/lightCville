@@ -55,7 +55,7 @@ You and your group will use everything you’ve learned over the past six units 
 * Have a professional README (with unique name, description, technologies used, screenshot, and link to deployed application).
 
 ## DEPLOYED LINKS
-* [VIEW LIVE APP]()
+* [VIEW LIVE APP](https://lightcville.herokuapp.com/login)
 * [GITHUB](https://github.com/epurpur/lightCville.git)
 
 ## PROJECT SUMMARY: 
