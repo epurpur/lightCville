@@ -229,7 +229,7 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
     document.querySelector('#editdecal_colo').value = decal_colo;
     document.querySelector('#editdecal_numb').value = decal_numb;
     // use conditional logic here for the dropdown values, similar to what we did in saveEdit function
-    //START HERE ####################
+
     // document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
     document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
     document.querySelector('#editmount_heig').innerHTML = mount_heig;
