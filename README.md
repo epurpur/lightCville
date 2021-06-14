@@ -70,8 +70,8 @@ This project will tackle the problem of wrangling Charlottesville’s various st
 *	So that… the city can make better informed decisions about maintenance, future development, etc.
 
 ## NEW TECH:
-*	Mapping library (leaflet, google maps api, openlayers, etc)
-*	Tabular view of data (tabulator, bootstrap tables)
+*	Mapping library (leaflet)
+*	Tabular view of data (tabulator)
 
  ## BUILT WITH 
   
@@ -88,7 +88,7 @@ This project will tackle the problem of wrangling Charlottesville’s various st
   * Connect-session-sequelize 
   * Handlebars
   * GET & POST API routes to add/rendering data
-  * MVC structure(Models,Views,Controllers)
+  * MVC Framework(Models,Views,Controllers)
 
 
 
