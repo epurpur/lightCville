@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
           model:User ,
           attributes: ['loggedIn'],
         },
-      
       ],
     });
     
@@ -28,6 +27,7 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 //routes to render '/login' view
 // Remember, '/login' will need information about the user passed into it

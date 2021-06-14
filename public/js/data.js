@@ -227,7 +227,10 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
     document.querySelector('#editbase_colo').setAttribute('value', base_colo);
     document.querySelector('#editcontract_n').setAttribute('value', contract_n);
     document.querySelector('#editdecal_colo').value = decal_colo;
-    document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
+    document.querySelector('#editdecal_numb').value = decal_numb;
+    // use conditional logic here for the dropdown values, similar to what we did in saveEdit function
+    //START HERE ####################
+    // document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
     document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
     document.querySelector('#editmount_heig').innerHTML = mount_heig;
     document.querySelector('#editnom_volt').innerHTML = nom_volt;
@@ -273,8 +276,15 @@ const saveEditRecord = async () => {
     if (!nom_volt) {nom_volt = null};
 
     let owner = document.querySelector('#editowner');
-    owner = owner.options[owner.selectedIndex];
-    if (owner === "Choose..." || owner === 'None' || typeof(owner) == 'undefined') {owner = null};
+    // if there is no value for the owner, use this try/catch block to set value of owner to null
+    try {owner = owner.options[owner.selectedIndex].text 
+        console.log('owner:', owner);
+        if (owner === "Choose..." || owner === 'None' || owner === '')
+        {owner = null};
+    } catch (error) {
+        owner = null;
+    }
+
 
     let style = document.querySelector('#editstyle');
     style = style.options[style.selectedIndex].text;
@@ -286,6 +296,7 @@ const saveEditRecord = async () => {
 
     let work_effec = document.querySelector('#editwork_effec').value.trim();
     if (work_effec === '') {work_effec = null};
+    
     console.log(recordID);
     console.log(recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec);
     // make fetch request to PUT route to update record
