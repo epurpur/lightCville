@@ -7,8 +7,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    
 }
 
 /* map styles */ 
@@ -43,7 +41,6 @@ button {
     border: black;
     border-style: solid;
 }
-
 
 /* data table styles */
 #dataTable {
