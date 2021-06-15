@@ -229,19 +229,28 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
     document.querySelector('#editdecal_colo').value = decal_colo;
     document.querySelector('#editdecal_numb').value = decal_numb;
     // use conditional logic here for the dropdown values, similar to what we did in saveEdit function
-    //START HERE ####################
+
     // document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
-    document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
+    // document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
+    document.querySelector('#editlumens').value = lumens;
     document.querySelector('#editmount_heig').innerHTML = mount_heig;
     document.querySelector('#editnom_volt').innerHTML = nom_volt;
     document.querySelector('#editowner').value = owner;
     document.querySelector('#editstyle').value = style;
-    document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
+    // document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
+    document.querySelector('#editwatts').value = watts;
     
     //need to do some string slicing to set date
     // '2015-12-31';  // date must be in this format
     work_effec = work_effec.slice(0, work_effec.indexOf('T'));
     document.querySelector('#editwork_effec').value = work_effec;
+
+    const one = document.querySelector('#editID').innerHTML = recordID;
+    const two = document.querySelector('#editlumens').value = lumens;
+    const three = document.querySelector('#editwatts').value = watts;
+
+    console.log("1:", one, "2", two, "3", three);
+
 };
 
 
@@ -266,8 +275,14 @@ const saveEditRecord = async () => {
     if (decal_numb === "Choose...") {decal_numb = null};
 
     let lumens = document.querySelector('#editlumens');
-    lumens = lumens.options[lumens.selectedIndex].text;
-    if (lumens === "Choose...") {lumens = null};
+    // if there is no value for the lumens, use this try/catch block to set value of lumens to null
+    try {lumens = lumens.options[lumens.selectedIndex].text 
+        console.log('lumens:', lumens);
+        if (lumens === "Choose..." || lumens === 'None' || lumens === '')
+        {lumens = null};
+    } catch (error) {
+        lumens = null;
+    }
  
     let mount_heig = document.querySelector('#editmount_heig').value.trim();
     if (!mount_heig) {mount_heig = null};
@@ -285,14 +300,25 @@ const saveEditRecord = async () => {
         owner = null;
     }
 
-
     let style = document.querySelector('#editstyle');
-    style = style.options[style.selectedIndex].text;
-    if (style === "Choose...") {style = null};
+    // if there is no value for the style, use this try/catch block to set value of style to null
+    try {style = style.options[style.selectedIndex].text 
+        console.log('style:', style);
+        if (style === "Choose..." || style === 'None' || style === '')
+        {style = null};
+    } catch (error) {
+        style = null;
+    }
 
     let watts = document.querySelector('#editwatts');
-    watts = watts.options[watts.selectedIndex].text;
-    if (watts === "Choose...") {watts = null};
+    // if there is no value for the watts, use this try/catch block to set value of watts to null
+    try {watts = watts.options[watts.selectedIndex].text 
+        console.log('watts:', watts);
+        if (watts === "Choose..." || watts === 'None' || watts === '')
+        {watts = null};
+    } catch (error) {
+        watts = null;
+    }
 
     let work_effec = document.querySelector('#editwork_effec').value.trim();
     if (work_effec === '') {work_effec = null};
@@ -302,7 +328,7 @@ const saveEditRecord = async () => {
     // make fetch request to PUT route to update record
     const response = await fetch(`/api/streetlights/edit/${recordID}`, {
         method: 'PUT',
-        body: JSON.stringify({ recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
+        body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
         headers: {'Content-Type': 'application/json'}
     });
     if (response.ok) {

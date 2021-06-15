@@ -57,6 +57,11 @@ router.post('/', (req, res) => {
 
 // edit streetlight record
 router.put('/edit/:id', (req, res) => {
+
+    console.log('REQUEST BODY');
+    console.log(req.body);
+    console.log('REQUEST PARAM')
+    console.log(req.params.id);
     //calls update method on Streetlights model
     Streetlights.update({
         base_colo: req.body.base_colo,
@@ -74,7 +79,8 @@ router.put('/edit/:id', (req, res) => {
     {
         where: {
             id: req.params.id,
-        }
+        }, 
+        logging: true
     })
     .then(updatedRecord => {
         res.json(updatedRecord);
