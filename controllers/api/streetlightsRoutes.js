@@ -55,44 +55,8 @@ router.post('/', (req, res) => {
   });
 
 
-// edit streetlight record
+// this route allows editing of an individual streetlight
 router.put('/edit/:id', (req, res) => {
-
-    console.log('REQUEST BODY');
-    console.log(req.body);
-    console.log('REQUEST PARAM')
-    console.log(req.params.id);
-    //calls update method on Streetlights model
-    Streetlights.update({
-        base_colo: req.body.base_colo,
-        contract_n: req.body.contract_n,
-        decal_colo: req.body.decal_colo,
-        decal_numb: req.body.decal_numb,
-        lumens: req.body.lumens,
-        mount_heig: req.body.mount_heig,
-        nom_volt: req.body.nom_volt,
-        owner: req.body.owner,
-        style: req.body.style,
-        watts: req.body.watts,
-        work_effec: req.body.work_effec
-    },
-    {
-        where: {
-            id: req.params.id,
-        }, 
-        logging: true
-    })
-    .then(updatedRecord => {
-        res.json(updatedRecord);
-    })
-    .catch(err => res.json(err));
-});
-
-
-
-// this is a test button fix route
-// TESTING //
-router.put('/edit/test/:id', (req, res) => {
     //calls update method on Streetlights model
 
     console.log('REQUEST BODY')

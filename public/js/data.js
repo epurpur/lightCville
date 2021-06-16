@@ -249,92 +249,7 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
 
 
 
-
-
-
 const saveEditRecord = async () => {
-    // executes fetch request to update chosen record
-
-    //select all updated record values
-    const recordID = document.querySelector('#editID').innerHTML;
-    
-    let base_colo = document.querySelector('#editbase_colo').value.trim();
-    if (!base_colo) {base_colo = null};
-    
-    let contract_n = document.querySelector('#editcontract_n').value.trim();
-    if (!contract_n) {contract_n = null};
-    
-    let decal_colo = document.querySelector('#editdecal_colo');
-    decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
-    if (decal_colo === "Choose...") {decal_colo = null};
-
-    let decal_numb = document.querySelector('#editdecal_numb');
-    decal_numb = decal_numb.options[decal_numb.selectedIndex].text;
-    if (decal_numb === "Choose...") {decal_numb = null};
-
-    let lumens = document.querySelector('#editlumens');
-    // if there is no value for the lumens, use this try/catch block to set value of lumens to null
-    try {lumens = lumens.options[lumens.selectedIndex].text 
-        if (lumens === "Choose..." || lumens === 'None' || lumens === '')
-        {lumens = null};
-    } catch (error) {
-        lumens = null;
-    }
- 
-    let mount_heig = document.querySelector('#editmount_heig').value.trim();
-    if (!mount_heig) {mount_heig = null};
-
-    let nom_volt = document.querySelector('#editnom_volt').value.trim();
-    if (!nom_volt) {nom_volt = null};
-
-    let owner = document.querySelector('#editowner');
-    // if there is no value for the owner, use this try/catch block to set value of owner to null
-    try {owner = owner.options[owner.selectedIndex].text 
-        console.log('owner:', owner);
-        if (owner === "Choose..." || owner === 'None' || owner === '')
-        {owner = null};
-    } catch (error) {
-        owner = null;
-    }
-
-    let style = document.querySelector('#editstyle');
-    // if there is no value for the style, use this try/catch block to set value of style to null
-    try {style = style.options[style.selectedIndex].text 
-        if (style === "Choose..." || style === 'None' || style === '')
-        {style = null};
-    } catch (error) {
-        style = null;
-    }
-
-    let watts = document.querySelector('#editwatts');
-    // if there is no value for the watts, use this try/catch block to set value of watts to null
-    try {watts = watts.options[watts.selectedIndex].text 
-        if (watts === "Choose..." || watts === 'None' || watts === '')
-        {watts = null};
-    } catch (error) {
-        watts = null;
-    }
-
-    let work_effec = document.querySelector('#editwork_effec').value.trim();
-    if (work_effec === '') {work_effec = null};
-    
-    console.log(recordID);
-    console.log(recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec);
-    // make fetch request to PUT route to update record
-    const response = await fetch(`/api/streetlights/edit/${recordID}`, {
-        method: 'PUT',
-        body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
-        headers: {'Content-Type': 'application/json'}
-    });
-    if (response.ok) {
-        alert('Record Updated!');
-        //reload page
-        window.location.reload();        
-    }
-}
-
-
-const saveEditRecordTest = async () => {
     // executes fetch request to update chosen record
 
     //select all updated record values
@@ -431,7 +346,7 @@ const saveEditRecordTest = async () => {
     console.log("work_effec", work_effec, typeof(work_effec));
 
     // make fetch request to PUT route to update record
-    const response = await fetch(`/api/streetlights/edit/test/${recordID}`, {
+    const response = await fetch(`/api/streetlights/edit/${recordID}`, {
         method: 'PUT',
         // body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
         body: JSON.stringify({ contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
