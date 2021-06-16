@@ -63,7 +63,6 @@ const makePointsCluster = (pointsData, mymap) => {
                        <br>
                        <button type="button" class="btn btn-primary popupBtn" data-bs-toggle="modal" data-bs-target="#editRecordModal" 
                        onclick="editRecord(${pointsData[i].id},${pointsData[i].base_colo},${pointsData[i].contract_n},'${pointsData[i].decal_colo}',${pointsData[i].decal_numb},${pointsData[i].lumens},${pointsData[i].mount_heig},${pointsData[i].nom_volt},'${pointsData[i].owner}','${pointsData[i].style}',${pointsData[i].watts},'${pointsData[i].work_effec}')">Edit</button>
-                       
                        <button type="button" class="btn btn-primary popupBtn" data-idNumDelete="${pointsData[i].id}" id="deleteRecordBtn" onclick="deleteRecord()">Delete</button>
                        `;
 
@@ -212,10 +211,9 @@ var download = function(content, fileName, mimeType) {
     }
 }
 
-
-
-// select other button elements in DOM
+// button which exports csv file of currently selected records
 const exportBtn = document.querySelector('#exportBtn').addEventListener('click', exportToCSV);
+
 
 
 const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec) => {
@@ -233,8 +231,8 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
     // document.querySelector('#editdecal_numb [value="' + decal_numb + '"]').selected = true;
     // document.querySelector('#editlumens [value="' + lumens + '"]').selected = true;
     document.querySelector('#editlumens').value = lumens;
-    document.querySelector('#editmount_heig').innerHTML = mount_heig;
-    document.querySelector('#editnom_volt').innerHTML = nom_volt;
+    document.querySelector('#editmount_heig').value = mount_heig;
+    document.querySelector('#editnom_volt').value = nom_volt;
     document.querySelector('#editowner').value = owner;
     document.querySelector('#editstyle').value = style;
     // document.querySelector('#editwatts [value="' + watts + '"]').selected = true;
@@ -245,55 +243,63 @@ const editRecord = async (recordID, base_colo, contract_n, decal_colo, decal_num
     work_effec = work_effec.slice(0, work_effec.indexOf('T'));
     document.querySelector('#editwork_effec').value = work_effec;
 
-    const one = document.querySelector('#editID').innerHTML = recordID;
-    const two = document.querySelector('#editlumens').value = lumens;
-    const three = document.querySelector('#editwatts').value = watts;
-
-    console.log("1:", one, "2", two, "3", three);
+    console.log("Edit Record data", recordID, typeof(recordID), base_colo, typeof(base_colo), contract_n, typeof(contract_n), decal_colo, typeof(decal_colo), decal_numb, typeof(decal_numb), lumens, typeof(lumens), mount_heig, typeof(mount_heig), nom_volt, typeof(nom_volt), owner, typeof(owner), style, typeof(style), watts, typeof(watts), work_effec, typeof(work_effec));
 
 };
+
 
 
 const saveEditRecord = async () => {
     // executes fetch request to update chosen record
 
     //select all updated record values
+
     const recordID = document.querySelector('#editID').innerHTML;
     
     let base_colo = document.querySelector('#editbase_colo').value.trim();
     if (!base_colo) {base_colo = null};
-    
+
     let contract_n = document.querySelector('#editcontract_n').value.trim();
     if (!contract_n) {contract_n = null};
-    
+    contract_n = parseInt(contract_n);
+
     let decal_colo = document.querySelector('#editdecal_colo');
-    decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
-    if (decal_colo === "Choose...") {decal_colo = null};
+    try {decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
+        if (decal_colo === "Choose...") 
+            {decal_colo = null};
+    } catch (error) {
+        decal_colo = null;
+    }
 
     let decal_numb = document.querySelector('#editdecal_numb');
-    decal_numb = decal_numb.options[decal_numb.selectedIndex].text;
-    if (decal_numb === "Choose...") {decal_numb = null};
+    try {decal_numb = decal_numb.options[decal_numb.selectedIndex].text
+        if (decal_numb === "Choose...") 
+            {decal_numb = null};
+    } catch (error) {
+        decal_numb = null;
+    }
 
     let lumens = document.querySelector('#editlumens');
     // if there is no value for the lumens, use this try/catch block to set value of lumens to null
     try {lumens = lumens.options[lumens.selectedIndex].text 
-        console.log('lumens:', lumens);
         if (lumens === "Choose..." || lumens === 'None' || lumens === '')
-        {lumens = null};
+            {lumens = null};
     } catch (error) {
         lumens = null;
     }
- 
+    lumens = parseInt(lumens);
+
     let mount_heig = document.querySelector('#editmount_heig').value.trim();
     if (!mount_heig) {mount_heig = null};
+    mount_heig = parseInt(mount_heig);
 
     let nom_volt = document.querySelector('#editnom_volt').value.trim();
     if (!nom_volt) {nom_volt = null};
+    nom_volt = parseInt(nom_volt);
 
     let owner = document.querySelector('#editowner');
     // if there is no value for the owner, use this try/catch block to set value of owner to null
     try {owner = owner.options[owner.selectedIndex].text 
-        console.log('owner:', owner);
         if (owner === "Choose..." || owner === 'None' || owner === '')
         {owner = null};
     } catch (error) {
@@ -303,7 +309,6 @@ const saveEditRecord = async () => {
     let style = document.querySelector('#editstyle');
     // if there is no value for the style, use this try/catch block to set value of style to null
     try {style = style.options[style.selectedIndex].text 
-        console.log('style:', style);
         if (style === "Choose..." || style === 'None' || style === '')
         {style = null};
     } catch (error) {
@@ -313,22 +318,36 @@ const saveEditRecord = async () => {
     let watts = document.querySelector('#editwatts');
     // if there is no value for the watts, use this try/catch block to set value of watts to null
     try {watts = watts.options[watts.selectedIndex].text 
-        console.log('watts:', watts);
         if (watts === "Choose..." || watts === 'None' || watts === '')
         {watts = null};
     } catch (error) {
         watts = null;
     }
+    watts = parseInt(watts);
 
     let work_effec = document.querySelector('#editwork_effec').value.trim();
     if (work_effec === '') {work_effec = null};
-    
-    console.log(recordID);
-    console.log(recordID, base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec);
+    work_effec = JSON.stringify(work_effec);
+
+    console.log('logging');
+    console.log("recordID", recordID, typeof(recordID));
+    console.log("base_colo", base_colo, typeof(base_colo));
+    console.log("contract_n", contract_n, typeof(contract_n));
+    console.log("decal_colo", decal_colo, typeof(decal_colo));
+    console.log("decal_numb", decal_numb, typeof(decal_numb));
+    console.log("lumens", lumens, typeof(lumens));
+    console.log("mount_heig", mount_heig, typeof(mount_heig));
+    console.log("nom_volt", nom_volt, typeof(nom_volt));
+    console.log("owner", owner, typeof(owner));
+    console.log("style", style, typeof(style));
+    console.log("watts", watts, typeof(watts));
+    console.log("work_effec", work_effec, typeof(work_effec));
+
     // make fetch request to PUT route to update record
     const response = await fetch(`/api/streetlights/edit/${recordID}`, {
         method: 'PUT',
-        body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
+        // body: JSON.stringify({ base_colo, contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
+        body: JSON.stringify({ contract_n, decal_colo, decal_numb, lumens, mount_heig, nom_volt, owner, style, watts, work_effec }),
         headers: {'Content-Type': 'application/json'}
     });
     if (response.ok) {
@@ -336,7 +355,12 @@ const saveEditRecord = async () => {
         //reload page
         window.location.reload();        
     }
+
 }
+
+
+
+
 
 const deleteRecord = async () => {
     // deletes the chosen record when clicking 'delete' button in popup window
@@ -451,52 +475,102 @@ const addRecord = async () => {
     // adds streetlight record to database
 
     // start by selecting values of all input fields
-    let base_colo = document.querySelector('#base_colo_add').value.trim();
-    if (!base_colo) {base_colo = null};
+    let base_colo = JSON.stringify(null);
     
     let contract_n = document.querySelector('#contract_n_add').value.trim();
     if (!contract_n) {contract_n = null};
+    contract_n = parseInt(contract_n);
     
     let decal_colo = document.querySelector('#decal_colo_add');
-    decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
-    if (decal_colo === "Choose...") {decal_colo = null};
+    try {decal_colo = decal_colo.options[decal_colo.selectedIndex].text;
+        if (decal_colo === "Choose...") 
+            {decal_colo = null};
+    } catch (error) {
+        decal_colo = null;
+    }
 
     let decal_numb = document.querySelector('#decal_numb_add');
-    decal_numb = decal_numb.options[decal_numb.selectedIndex].text;
-    if (decal_numb === "Choose...") {decal_numb = null};
+    try {decal_numb = decal_numb.options[decal_numb.selectedIndex].text
+        if (decal_numb === "Choose...") 
+            {decal_numb = null};
+    } catch (error) {
+        decal_numb = null;
+    }
 
     //gets current datetime stamp
     let install_da = new Date().toLocaleString();
 
     let lumens = document.querySelector('#lumens_add');
-    lumens = lumens.options[lumens.selectedIndex].text;
-    if (lumens === "Choose...") {lumens = null};
- 
+    try {lumens = lumens.options[lumens.selectedIndex].text 
+        if (lumens === "Choose..." || lumens === 'None' || lumens === '')
+            {lumens = null};
+    } catch (error) {
+        lumens = null;
+    }
+    lumens = parseInt(lumens);
+
     let mount_heig = document.querySelector('#mount_heig_add').value.trim();
     if (!mount_heig) {mount_heig = null};
+    mount_heig = parseInt(mount_heig);
 
     let nom_volt = document.querySelector('#nom_volt_add').value.trim();
     if (!nom_volt) {nom_volt = null};
+    nom_volt = parseInt(nom_volt);
 
     let owner = document.querySelector('#owner_add');
-    owner = owner.options[owner.selectedIndex].text;
-    if (owner === "Choose..." || owner === 'None') {owner = null};
+    try {owner = owner.options[owner.selectedIndex].text 
+        if (owner === "Choose..." || owner === 'None' || owner === '')
+        {owner = null};
+    } catch (error) {
+        owner = null;
+    }
 
     let style = document.querySelector('#style_add');
-    style = style.options[style.selectedIndex].text;
-    if (style === "Choose...") {style = null};
+    try {style = style.options[style.selectedIndex].text 
+        if (style === "Choose..." || style === 'None' || style === '')
+        {style = null};
+    } catch (error) {
+        style = null;
+    }
 
     let watts = document.querySelector('#watts_add');
-    watts = watts.options[watts.selectedIndex].text;
-    if (watts === "Choose...") {watts = null};
+    try {watts = watts.options[watts.selectedIndex].text 
+        if (watts === "Choose..." || watts === 'None' || watts === '')
+        {watts = null};
+    } catch (error) {
+        watts = null;
+    }
+    watts = parseInt(watts);
 
     let work_effec = document.querySelector('#work_effec_add').value.trim();
     if (work_effec === '') {work_effec = null};
+    work_effec = JSON.stringify(work_effec);
 
     //latitude and longitude are required values
     let latitude = document.querySelector('#latitude_add').value.trim();
     let longitude = document.querySelector('#longitude_add').value.trim();
     
+
+    console.log("Add New Record Data")
+    console.log("base_colo", base_colo, typeof(base_colo));
+    console.log("contract_n", contract_n, typeof(contract_n));
+    console.log("decal_colo", decal_colo, typeof(decal_colo));
+    console.log("decal_numb", decal_numb, typeof(decal_numb));
+    console.log("lumens", lumens, typeof(lumens));
+    console.log("mount_heig", mount_heig, typeof(mount_heig));
+    console.log("nom_volt", nom_volt, typeof(nom_volt));
+    console.log("owner", owner, typeof(owner));
+    console.log("style", style, typeof(style));
+    console.log("watts", watts, typeof(watts));
+    console.log("work_effec", work_effec, typeof(work_effec));
+    console.log("Latitude", latitude, typeof(latitude));
+    console.log("Longitude", longitude, typeof(longitude));
+
+    if (latitude === "" || longitude === "") {
+        alert('Must provide value for latitude and longitude');
+    }
+
+
 
     // take all values and make fetch request to database to create new streetlight record
     const response = await fetch('/api/streetlights', {

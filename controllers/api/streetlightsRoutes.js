@@ -55,16 +55,14 @@ router.post('/', (req, res) => {
   });
 
 
-// edit streetlight record
+// this route allows editing of an individual streetlight
 router.put('/edit/:id', (req, res) => {
-
-    console.log('REQUEST BODY');
-    console.log(req.body);
-    console.log('REQUEST PARAM')
-    console.log(req.params.id);
     //calls update method on Streetlights model
+
+    console.log('REQUEST BODY')
+    console.log(req.body);
+
     Streetlights.update({
-        base_colo: req.body.base_colo,
         contract_n: req.body.contract_n,
         decal_colo: req.body.decal_colo,
         decal_numb: req.body.decal_numb,
@@ -87,6 +85,9 @@ router.put('/edit/:id', (req, res) => {
     })
     .catch(err => res.json(err));
 });
+
+
+
 
 
 // view individual streetlight data by ID number
