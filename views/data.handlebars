@@ -91,7 +91,7 @@
             <form>
                 <div class="mb-3 non-dropdown">
                     <label for="base_colo_add" class="form-label">base_colo</label>
-                    <input type="text" class="form-control w-50" id="base_colo_add" placeholder="Enter value">
+                    <input type="text" class="form-control w-50" id="base_colo_add" placeholder="No Value" disabled>
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="contract_n_add" class="form-label">contract_n</label>
@@ -110,7 +110,6 @@
                     <label for="decal_numb_add" class="form-label">decal_numb</label>
                     <select class="custom-select w-50" id="decal_numb_add">
                         <option selected>Choose...</option>
-                        <option value="x1">x1</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -147,11 +146,11 @@
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="mount_heig_add" class="form-label">mount_heig</label>
-                    <input type="text" class="form-control w-50" id="mount_heig_add" placeholder="Enter value">
+                    <input type="text" class="form-control w-50" id="mount_heig_add" placeholder="Enter numeric value">
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="nom_volt_add" class="form-label">nom_volt</label>
-                    <input type="text" class="form-control w-50" id="nom_volt_add" placeholder="Enter value">
+                    <input type="text" class="form-control w-50" id="nom_volt_add" placeholder="Enter numeric value">
                 </div>
                 <div class="mb-3">
                     <label for="owner_add" class="form-label">owner</label>
@@ -219,7 +218,7 @@
             <form>
                 <div class="mb-3 non-dropdown">
                     <label for="editbase_colo" class="form-label">base_colo</label>
-                    <input type="text" class="form-control w-50" id="editbase_colo">
+                    <input type="text" class="form-control w-50" id="editbase_colo" disabled>
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="editcontract_n" class="form-label">contract_n</label>
@@ -238,7 +237,6 @@
                     <label for="editdecal_numb" class="form-label">decal_numb</label>
                     <select class="custom-select w-50" id="editdecal_numb">
                         <option selected>Choose...</option>
-                        <option value="x1">x1</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -271,11 +269,11 @@
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="editmount_heig" class="form-label">mount_heig</label>
-                    <input type="text" class="form-control w-50" id="editmount_heig" placeholder="Enter value">
+                    <input type="text" class="form-control w-50" id="editmount_heig" placeholder="Enter numeric value">
                 </div>
                 <div class="mb-3 non-dropdown">
                     <label for="editnom_volt" class="form-label">nom_volt</label>
-                    <input type="text" class="form-control w-50" id="editnom_volt" placeholder="Enter value">
+                    <input type="text" class="form-control w-50" id="editnom_volt" placeholder="Enter numeric value">
                 </div>
                 <div class="mb-3">
                     <label for="editowner" class="form-label">owner</label>
@@ -317,7 +315,9 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id='saveDataFilterBtn' data-bs-dismiss="modal" onclick="saveEditRecord()">Save</button>
+            {{!-- <button type="button" class="btn btn-primary" id='saveDataFilterBtn' data-bs-dismiss="modal" onclick="saveEditRecord()">Save</button> --}}
+            <button type="button" class="btn btn-primary" id='saveDataFilterBtn' data-bs-dismiss="modal" onclick="saveEditRecordTest()">Save</button>
+
         </div>
         </div>
     </div>

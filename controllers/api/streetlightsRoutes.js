@@ -89,6 +89,43 @@ router.put('/edit/:id', (req, res) => {
 });
 
 
+
+// this is a test button fix route
+// TESTING //
+router.put('/edit/test/:id', (req, res) => {
+    //calls update method on Streetlights model
+
+    console.log('REQUEST BODY')
+    console.log(req.body);
+
+    Streetlights.update({
+        contract_n: req.body.contract_n,
+        decal_colo: req.body.decal_colo,
+        decal_numb: req.body.decal_numb,
+        lumens: req.body.lumens,
+        mount_heig: req.body.mount_heig,
+        nom_volt: req.body.nom_volt,
+        owner: req.body.owner,
+        style: req.body.style,
+        watts: req.body.watts,
+        work_effec: req.body.work_effec
+    },
+    {
+        where: {
+            id: req.params.id,
+        }, 
+        logging: true
+    })
+    .then(updatedRecord => {
+        res.json(updatedRecord);
+    })
+    .catch(err => res.json(err));
+});
+
+
+
+
+
 // view individual streetlight data by ID number
 router.get('/oneStreetlight/:id', async (req, res) => {
 
