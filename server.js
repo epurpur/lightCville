@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
-
+const compression = require('compression');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -22,7 +22,7 @@ const sess = {
     db: sequelize
   })
 };
-
+app.use(compression());
 app.use(session(sess));
 
 // Inform Express.js on which template engine to use
